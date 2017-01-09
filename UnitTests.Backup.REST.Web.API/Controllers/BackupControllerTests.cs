@@ -1,23 +1,21 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Backup.REST.Web.API.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Web.Http;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Backup.REST.Web.API;
-using Backup.REST.Web.API.Controllers;
+using System.Threading.Tasks;
 
 namespace UnitTests.Backup.REST.Web.API.Controllers
 {
-    [TestClass]
-    public class ValuesControllerTest
+    [TestClass()]
+    public class BackupControllerTests
     {
         [TestMethod]
         public void Get()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            BackupController controller = new BackupController();
 
             // Act
             IEnumerable<string> result = controller.Get();
@@ -33,7 +31,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void GetById()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            BackupController controller = new BackupController();
 
             // Act
             string result = controller.Get(5);
@@ -46,7 +44,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Post()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            BackupController controller = new BackupController();
 
             // Act
             controller.Post("value");
@@ -58,7 +56,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Put()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            BackupController controller = new BackupController();
 
             // Act
             controller.Put(5, "value");
@@ -70,7 +68,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Delete()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            BackupController controller = new BackupController();
 
             // Act
             controller.Delete(5);
