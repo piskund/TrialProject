@@ -7,10 +7,7 @@ namespace Backup.REST.Web.API.Areas.HelpPage
     {
         public override string AreaName
         {
-            get
-            {
-                return "HelpPage";
-            }
+            get { return "HelpPage"; }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
@@ -18,11 +15,11 @@ namespace Backup.REST.Web.API.Areas.HelpPage
             context.MapRoute(
                 "HelpPage_Default",
                 "Help/{action}/{apiId}",
-                new { controller = "Help", action = "Index", apiId = UrlParameter.Optional });
+                new {controller = "Help", action = "Index", apiId = UrlParameter.Optional});
             context.MapRoute(
-            "Help Area",
-            "",
-            new { controller = "Help", action = "Index" }
+                "Help Area",
+                "",
+                new {controller = "Help", action = "Index"}
             );
             HelpPageConfig.Register(GlobalConfiguration.Configuration);
         }
