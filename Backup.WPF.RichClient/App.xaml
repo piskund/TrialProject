@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Backup.WPF.RichClient"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

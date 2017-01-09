@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web.Http;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Backup.REST.Web.API;
+﻿using System.Linq;
 using Backup.REST.Web.API.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Backup.REST.Web.API.Controllers
 {
     [TestClass]
-    public class ValuesControllerTest
+    public class BackupControllerTests
     {
         [TestMethod]
         public void Get()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new BackupController();
 
             // Act
-            IEnumerable<string> result = controller.Get();
+            var result = controller.Get();
 
             // Assert
             Assert.IsNotNull(result);
@@ -33,10 +27,10 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void GetById()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new BackupController();
 
             // Act
-            string result = controller.Get(5);
+            var result = controller.Get(5);
 
             // Assert
             Assert.AreEqual("value", result);
@@ -46,7 +40,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Post()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new BackupController();
 
             // Act
             controller.Post("value");
@@ -58,7 +52,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Put()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new BackupController();
 
             // Act
             controller.Put(5, "value");
@@ -70,7 +64,7 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         public void Delete()
         {
             // Arrange
-            ValuesController controller = new ValuesController();
+            var controller = new BackupController();
 
             // Act
             controller.Delete(5);
