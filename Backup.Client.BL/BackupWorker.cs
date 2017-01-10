@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Principal;
+using Backup.Client.BL.Unity;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL
@@ -14,6 +15,7 @@ namespace Backup.Client.BL
             _backupConfig = backupConfig;
         }
 
+        [ActivityLog]
         public void DoBackup()
         {
             var filesList = Directory.GetFiles(_backupConfig.SourceFolderPath);

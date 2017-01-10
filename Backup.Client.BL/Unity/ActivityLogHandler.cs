@@ -2,18 +2,15 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace Backup.Client.Console.App.Unity
+namespace Backup.Client.BL.Unity
 {
-    public class ExceptionHandler : ICallHandler
+    public class ActivityLogHandler : ICallHandler
     {
         public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
         {
             var result = getNext()(input, getNext);
             var logger = ServiceLocator.Current.GetInstance<ILogger>();
-            if (result.Exception != null)
-            {
-                logger.LogException(result.Exception);
-            }
+            logger.LogActivity(input.MethodBase.Name);
             return result;
         }
 

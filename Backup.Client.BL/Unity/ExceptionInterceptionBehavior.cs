@@ -4,7 +4,7 @@ using Backup.Common.Logger;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace Backup.Client.Console.App.Unity
+namespace Backup.Client.BL.Unity
 {
     public class ExceptionInterceptionBehavior : IInterceptionBehavior
     {
