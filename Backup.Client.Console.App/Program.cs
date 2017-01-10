@@ -10,10 +10,16 @@ namespace Backup.Client.Console.App
     {
         private static void Main(string[] args)
         {
-            IUnityContainer unity = new UnityContainer();
+            IUnityContainer container = new UnityContainer();
             //unity.AddNewExtension<Interception>();
-            unity.LoadConfiguration();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(unity));
+            container.LoadConfiguration();
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+            container.AddNewExtension<Interception>();
+            //container.RegisterType<ITenantStore, TenantStore>(
+            //  new Interceptor<InterfaceInterceptor>(),
+            //  new InterceptionBehavior<LoggingInterceptionBehavior>(),
+            //  new InterceptionBehavior<CachingInterceptionBehavior>());
+
             //var logger1 = unity.Resolve<ILogger>();
             //var logger = ServiceLocator.Current.GetInstance<ILogger>();
             var tmp = new SomeClass();
