@@ -1,7 +1,7 @@
 ﻿using System;
 using Backup.Common.Interfaces;
 
-namespace Backup.Common.POCO
+namespace Backup.Common.DTO
 {
     /// <summary>
     /// Credential info.

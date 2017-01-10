@@ -40,8 +40,21 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture.AutoMoq, Version=3.19.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.AutoMoq.3.19.2\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Struik.AutoFixture.AutoMoq.AutoSetup, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.AutoMoq.AutoSetup.1.3.0.0\lib\net40\Struik.AutoFixture.AutoMoq.AutoSetup.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -64,7 +77,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BackupWorkerTests.cs" />
+    <Compile Include="AutoFixture\AutoPopulatedMoqPropertiesCustomization.cs" />
+    <Compile Include="FunctionalTests\BackupWorkerTests.cs" />
+    <Compile Include="AutoFixture\PropertiesPostprocessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +95,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="TestData\testFile1" />
+    <None Include="TestData\testFile2" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -2,7 +2,7 @@
 using System.Net;
 using Backup.Common.Interfaces;
 
-namespace Backup.Common.POCO
+namespace Backup.Common.DTO
 {
     /// <summary>
     /// Provides configuration info necessary to perform backup.
