@@ -48,6 +48,7 @@
     <Compile Include="Interfaces\ICredentialInfo.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\LogEntry.cs" />
+    <Compile Include="Logger\LoggerExtension.cs" />
     <Compile Include="Logger\LoggingEventType.cs" />
     <Compile Include="DTO\BackupConfig.cs" />
     <Compile Include="DTO\CredentialInfo.cs" />

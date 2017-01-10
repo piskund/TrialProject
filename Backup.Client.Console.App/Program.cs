@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Backup.Common.Logger;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace Backup.Client.Console.App
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            IUnityContainer unity = new UnityContainer();
+            //unity.AddNewExtension<Interception>();
+            unity.LoadConfiguration();
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(unity));
+            //var logger1 = unity.Resolve<ILogger>();
+            //var logger = ServiceLocator.Current.GetInstance<ILogger>();
+            var tmp = new SomeClass();
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Backup.Common.Logger
     /// <summary>
     /// Simple DTO object contains information about log message.
     /// </summary>
+    [Serializable]
     public class LogEntry
     {
         /// <summary>
@@ -14,7 +15,7 @@ namespace Backup.Common.Logger
         /// <value>
         /// The exception.
         /// </value>
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; set; }
 
         /// <summary>
         /// Gets the message.
@@ -22,7 +23,7 @@ namespace Backup.Common.Logger
         /// <value>
         /// The message.
         /// </value>
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// Gets the severity.
@@ -30,7 +31,7 @@ namespace Backup.Common.Logger
         /// <value>
         /// The severity.
         /// </value>
-        public LoggingEventType Severity { get; private set; }
+        public LoggingEventType Severity { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogEntry"/> class.
