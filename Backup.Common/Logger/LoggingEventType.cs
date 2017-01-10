@@ -6,6 +6,7 @@
         Information,
         Warning,
         Error,
-        Fatal
+        Fatal,
+        Activity
     }
 }

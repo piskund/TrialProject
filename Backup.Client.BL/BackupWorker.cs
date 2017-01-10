@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Security.Principal;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL
@@ -18,12 +20,25 @@ namespace Backup.Client.BL
             foreach (var sourceFullName in filesList)
             {
                 var destinationFullName = Path.Combine(_backupConfig.DestinationFolderPath, Path.GetFileName(sourceFullName));
-                BackupFile(sourceFullName, destinationFullName);
+                BackupFile(sourceFullName, destinationFullName, _backupConfig.SourceCredential);
             }
         }
 
-        internal void BackupFile(string sourceFullName, string destinationFullName)
+        internal void BackupFile(string sourceFullName, string destinationFullName, ICredentialInfo credential)
         {
+            //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+            //var identity = new WindowsIdentity(credential);
+            //var context = identity.Impersonate();
+
+            try
+            {
+                File.Copy(sourceFullName, destinationFullName, true);
+            }
+            catch (Exception e)
+            {
+                var tmp = e.Message;
+                //context.Undo();
+            }
         }
     }
 }
