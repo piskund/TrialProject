@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backup.WPF.RichClient", "Ba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backup.Client.BL", "Backup.Client.BL\Backup.Client.BL.csproj", "{86C46DFF-298F-417B-A1E2-42DE93C1FA9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Backup.Client.BL", "UnitTests.Backup.Client.BL\UnitTests.Backup.Client.BL.csproj", "{D10AACF5-CB57-49B3-80FD-EC769139931F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{86C46DFF-298F-417B-A1E2-42DE93C1FA9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C46DFF-298F-417B-A1E2-42DE93C1FA9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86C46DFF-298F-417B-A1E2-42DE93C1FA9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D10AACF5-CB57-49B3-80FD-EC769139931F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D10AACF5-CB57-49B3-80FD-EC769139931F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D10AACF5-CB57-49B3-80FD-EC769139931F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D10AACF5-CB57-49B3-80FD-EC769139931F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
