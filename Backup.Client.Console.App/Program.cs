@@ -1,8 +1,6 @@
-﻿using Backup.Common.Logger;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
-using Microsoft.Practices.Unity.InterceptionExtension;
 
 namespace Backup.Client.Console.App
 {

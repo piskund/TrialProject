@@ -1,4 +1,5 @@
-﻿using Backup.Common.Logger;
+﻿using Backup.Client.BL.Interfaces;
+using Backup.Common.DTO;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
@@ -9,8 +10,15 @@ namespace Backup.Client.BL.Unity
         public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
         {
             var result = getNext()(input, getNext);
-            var logger = ServiceLocator.Current.GetInstance<ILogger>();
-            logger.LogActivity(input.MethodBase.Name);
+            if (input.Arguments.ContainsParameter("config"))
+            {
+                var config = input.Arguments["config"] as BackupConfig;
+                if (config != null)
+                {
+                    var activityFacade = ServiceLocator.Current.GetInstance<IActivityFacade>();
+                    activityFacade.Save(new ActivityInfo(config));
+                }
+            }
             return result;
         }
 

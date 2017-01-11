@@ -4,9 +4,9 @@ namespace Backup.Common.Logger
 {
     public static class LoggerExtension
     {
-        public static void LogActivity(this ILogger logger, string message)
+        public static void LogInfo(this ILogger logger, string message)
         {
-            logger.Log(new LogEntry(LoggingEventType.Activity, message));
+            logger.Log(new LogEntry(LoggingEventType.Information, message));
         }
 
         public static void LogException(this ILogger logger, Exception e)

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Security.Principal;
+using Backup.Client.BL.Interfaces;
 using Backup.Client.BL.Unity;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL
 {
-    public class BackupWorker
+    public class BackupWorker : IBackupWorker
     {
         private readonly IBackupConfig _backupConfig;
 
@@ -15,8 +16,7 @@ namespace Backup.Client.BL
             _backupConfig = backupConfig;
         }
 
-        [ActivityLog]
-        public void DoBackup()
+        public void PerformBackup()
         {
             var filesList = Directory.GetFiles(_backupConfig.SourceFolderPath);
             foreach (var sourceFullName in filesList)
@@ -26,6 +26,7 @@ namespace Backup.Client.BL
             }
         }
 
+        [ActivityLog]
         internal void BackupFile(string sourceFullName, string destinationFullName, ICredentialInfo credential)
         {
             //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
