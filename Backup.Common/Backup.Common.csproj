@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DTO\ActivityInfo.cs" />
     <Compile Include="DTO\ActivivtyStatus.cs" />
+    <Compile Include="DTO\ScheduledBackup.cs" />
     <Compile Include="Interfaces\IBackupConfig.cs" />
     <Compile Include="Interfaces\ICredentialInfo.cs" />
     <Compile Include="Logger\ILogger.cs" />
