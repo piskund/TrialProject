@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backup.Client.BL.Interfaces;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL
@@ -11,12 +12,17 @@ namespace Backup.Client.BL
     {
         private readonly BlockingCollection<Task> _queue = new BlockingCollection<Task>();
 
+        public BackupManager(IEnumerable<IScheduledJob> scheduledJobs, IBackupWorker worker)
+        {
+            QueueProducer(scheduledJobs, job => worker.DoWork(job.BackupConfig));
+        }
+
         public BackupManager(IEnumerable<IScheduledJob> scheduledJobs, Action<IScheduledJob> action)
         {
             QueueProducer(scheduledJobs, action);
         }
 
-        internal void QueueProducer(IEnumerable<IScheduledJob> scheduledJobs, Action<IScheduledJob> action)
+        private void QueueProducer(IEnumerable<IScheduledJob> scheduledJobs, Action<IScheduledJob> action)
         {
             var dict = scheduledJobs.ToDictionary(j => j.ScheduledDateTime);
             var sortedByScheduledTime = new SortedList<DateTime, IScheduledJob>(dict);
@@ -29,7 +35,7 @@ namespace Backup.Client.BL
             _queue.CompleteAdding();
         }
 
-        public void Execute()
+        private void Execute()
         {
             if (!_queue.IsCompleted)
             {
@@ -42,9 +48,7 @@ namespace Backup.Client.BL
         public void ExecuteAll()
         {
             while (!_queue.IsCompleted)
-            {
                 Execute();
-            }
         }
     }
 }

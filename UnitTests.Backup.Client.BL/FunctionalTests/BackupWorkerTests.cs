@@ -41,10 +41,10 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
                 DestinationFolderPath = DestinationPath,
                 DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"}
             };
-            var backupWorker = new BackupWorker(loggerMock.Object, backupConfig);
+            var backupWorker = new BackupWorker(loggerMock.Object);
 
             // Act
-            backupWorker.DoWork();
+            backupWorker.DoWork(backupConfig);
 
             // Assert
             var filesInSource = Directory.EnumerateFiles(SourcePath);

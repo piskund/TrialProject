@@ -18,6 +18,10 @@ namespace Backup.Client.Console.App
         {
             Requires.NotNull(entry, nameof(entry));
             WriteLine(entry.Message);
+            if (entry.Exception != null)
+            {
+                WriteLine($"{entry.Exception.GetType()} has been thrown! Stack: {entry.Exception.StackTrace}");
+            }
         }
     }
 }

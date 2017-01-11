@@ -4,7 +4,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
-using Backup.Common.DTO;
+using Backup.Common.Interfaces;
 using CodeContracts;
 using Microsoft.Win32.SafeHandles;
 
@@ -30,7 +30,7 @@ namespace Backup.Client.BL.Helpers
         /// <param name="credentialInfo">The credential information.</param>
         /// <returns></returns>
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        public static SafeTokenHandle GetImpersonationToken(this CredentialInfo credentialInfo)
+        public static SafeTokenHandle GetImpersonationToken(this ICredentialInfo credentialInfo)
         {
             Requires.NotNull(credentialInfo, nameof(credentialInfo));
             Requires.NotNullOrEmpty(credentialInfo.UserName, nameof(credentialInfo.UserName));

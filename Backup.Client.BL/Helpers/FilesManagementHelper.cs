@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Backup.Common.DTO;
+using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL.Helpers
 {
@@ -10,7 +10,7 @@ namespace Backup.Client.BL.Helpers
         /// </summary>
         /// <param name="backupConfig">The backup configuration.</param>
         /// <param name="copySubDirs">if set to <c>true</c> [copy sub dirs].</param>
-        public static void DirectoryCopy(BackupConfig backupConfig, bool copySubDirs = false)
+        public static void DirectoryCopy(IBackupConfig backupConfig, bool copySubDirs = false)
         {
             DirectoryCopy(backupConfig.SourceFolderPath, backupConfig.DestinationFolderPath, copySubDirs);
         }

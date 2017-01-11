@@ -1,67 +1,46 @@
 ﻿using System.Security.Principal;
 using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
-using Backup.Client.BL.Unity;
-using Backup.Common.DTO;
+using Backup.Common.Interfaces;
 using Backup.Common.Logger;
-using CodeContracts;
 
 namespace Backup.Client.BL
 {
     /// <summary>
     ///     Performs backup work.
     /// </summary>
-    /// <seealso cref="Backup.Client.BL.Interfaces.IWorker" />
-    public class BackupWorker : IWorker
+    /// <seealso cref="Backup.Client.BL.Interfaces.IBackupWorker" />
+    public class BackupWorker : IBackupWorker
     {
         private readonly ILogger _logger;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
         /// </summary>
-        public BackupWorker(ILogger logger) : this(logger, new BackupConfig())
+        public BackupWorker(ILogger logger)
         {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
-        /// </summary>
-        /// <param name="logger">The logger.</param>
-        /// <param name="backupConfig">The backup configuration.</param>
-        public BackupWorker(ILogger logger, BackupConfig backupConfig)
-        {
-            Requires.NotNull(logger, nameof(logger));
-            Requires.NotNull(backupConfig, nameof(backupConfig));
-            BackupConfig = backupConfig;
             _logger = logger;
         }
 
         /// <summary>
-        ///     Gets or sets the backup configuration.
-        /// </summary>
-        /// <value>
-        ///     The backup configuration.
-        /// </value>
-        public BackupConfig BackupConfig { get; set; }
-
-        /// <summary>
         ///     Performs the required work.
         /// </summary>
-        public void DoWork()
+        public void DoWork(IBackupConfig config)
         {
             _logger.LogInfo(
-                $"Backup work started. \n Source: {BackupConfig.SourceFolderPath} \n Destination: {BackupConfig.DestinationFolderPath} \n");
-            PerformBackup(BackupConfig);
+                $"Backup work started. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
+
+            PerformBackup(config);
+
             _logger.LogInfo(
-                $"Backup work finished. \n Source: {BackupConfig.SourceFolderPath} \n Destination: {BackupConfig.DestinationFolderPath} \n");
+                $"Backup work finished. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
         }
 
         /// <summary>
         ///     Backups the file.
         /// </summary>
         /// <param name="backupConfig">The backup configuration.</param>
-        [ActivityLog]
-        private void PerformBackup(BackupConfig backupConfig)
+        private void PerformBackup(IBackupConfig backupConfig)
         {
             var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken();
             using (destinationImpersonationToken)
