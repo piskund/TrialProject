@@ -1,33 +1,63 @@
 ﻿using System;
 using System.IO;
-using System.Security.Principal;
 using Backup.Client.BL.Interfaces;
 using Backup.Client.BL.Unity;
-using Backup.Common.Interfaces;
+using Backup.Common.DTO;
 
 namespace Backup.Client.BL
 {
-    public class BackupWorker : IBackupWorker
+    /// <summary>
+    ///     Performs backup work.
+    /// </summary>
+    /// <seealso cref="Backup.Client.BL.Interfaces.IWorker" />
+    public class BackupWorker : IWorker
     {
-        private readonly IBackupConfig _backupConfig;
-
-        internal BackupWorker(IBackupConfig backupConfig)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
+        /// </summary>
+        public BackupWorker()
         {
-            _backupConfig = backupConfig;
         }
 
-        public void PerformBackup()
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
+        /// </summary>
+        /// <param name="backupConfig">The backup configuration.</param>
+        public BackupWorker(BackupConfig backupConfig)
         {
-            var filesList = Directory.GetFiles(_backupConfig.SourceFolderPath);
+            BackupConfig = backupConfig;
+        }
+
+        /// <summary>
+        ///     Gets or sets the backup configuration.
+        /// </summary>
+        /// <value>
+        ///     The backup configuration.
+        /// </value>
+        public BackupConfig BackupConfig { get; set; }
+
+        /// <summary>
+        ///     Performs the required work.
+        /// </summary>
+        public void DoWork()
+        {
+            var filesList = Directory.GetFiles(BackupConfig.SourceFolderPath);
             foreach (var sourceFullName in filesList)
             {
-                var destinationFullName = Path.Combine(_backupConfig.DestinationFolderPath, Path.GetFileName(sourceFullName));
-                BackupFile(sourceFullName, destinationFullName, _backupConfig.SourceCredential);
+                var destinationFullName = Path.Combine(BackupConfig.DestinationFolderPath,
+                    Path.GetFileName(sourceFullName));
+                BackupFile(sourceFullName, destinationFullName, BackupConfig);
             }
         }
 
+        /// <summary>
+        /// Backups the file.
+        /// </summary>
+        /// <param name="sourceFullName">Full name of the source.</param>
+        /// <param name="destinationFullName">Full name of the destination.</param>
+        /// <param name="backupConfig">The backup configuration.</param>
         [ActivityLog]
-        internal void BackupFile(string sourceFullName, string destinationFullName, ICredentialInfo credential)
+        internal static void BackupFile(string sourceFullName, string destinationFullName, BackupConfig backupConfig)
         {
             //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             //var identity = new WindowsIdentity(credential);
@@ -41,6 +71,7 @@ namespace Backup.Client.BL
             {
                 var tmp = e.Message;
                 //context.Undo();
+                throw;
             }
         }
     }

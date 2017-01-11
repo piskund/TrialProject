@@ -40,7 +40,7 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
             var backupWorker = new BackupWorker(backupConfig);
 
             // Act
-            backupWorker.PerformBackup();
+            backupWorker.DoWork();
 
             // Assert
             var filesInSource = Directory.EnumerateFiles(SourcePath);
