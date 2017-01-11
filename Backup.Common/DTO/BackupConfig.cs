@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using Backup.Common.Interfaces;
 
 namespace Backup.Common.DTO
 {
@@ -8,24 +9,13 @@ namespace Backup.Common.DTO
     /// </summary>
     /// <seealso cref="Backup.Common.Interfaces.IBackupConfig" />
     [Serializable]
-    public class BackupConfig
+    public class BackupConfig : IBackupConfig
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="BackupConfig" /> class.
         /// </summary>
         public BackupConfig()
         {
-        }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BackupConfig" /> class.
-        /// </summary>
-        /// <param name="sourceCredential">The source credential.</param>
-        /// <param name="destinationCredential">The destination credential.</param>
-        public BackupConfig(CredentialInfo sourceCredential, CredentialInfo destinationCredential)
-        {
-            SourceCredential = sourceCredential;
-            DestinationCredential = destinationCredential;
         }
 
         /// <summary>
@@ -45,6 +35,14 @@ namespace Backup.Common.DTO
         public string SourceFolderPath { get; set; }
 
         /// <summary>
+        /// Gets the source credential (explicit interface implementation).
+        /// </summary>
+        /// <value>
+        /// The source credential.
+        /// </value>
+        ICredentialInfo IBackupConfig.SourceCredential => this.SourceCredential;
+
+        /// <summary>
         ///     Gets or sets the source credential.
         /// </summary>
         /// <value>
@@ -59,6 +57,14 @@ namespace Backup.Common.DTO
         ///     The destination folder path.
         /// </value>
         public string DestinationFolderPath { get; set; }
+
+        /// <summary>
+        /// Gets the destination credential (explicit interface implementation).
+        /// </summary>
+        /// <value>
+        /// The destination credential.
+        /// </value>
+        ICredentialInfo IBackupConfig.DestinationCredential => this.DestinationCredential;
 
         /// <summary>
         ///     Gets or sets the destination credential.

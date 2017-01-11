@@ -1,4 +1,5 @@
 ﻿using System;
+using Backup.Common.Interfaces;
 
 namespace Backup.Common.DTO
 {
@@ -6,7 +7,7 @@ namespace Backup.Common.DTO
     ///     Holds information about scheduled backup.
     /// </summary>
     [Serializable]
-    public class ScheduledBackup
+    public class ScheduledBackup : IScheduledJob
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ScheduledBackup" /> class.
@@ -34,5 +35,13 @@ namespace Backup.Common.DTO
         ///     The backup configuration.
         /// </value>
         public BackupConfig BackupConfig { get; set; }
+
+        /// <summary>
+        /// Gets the backup configuration (explicit interface implementation).
+        /// </summary>
+        /// <value>
+        /// The backup configuration.
+        /// </value>
+        IBackupConfig IScheduledJob.BackupConfig => BackupConfig;
     }
 }

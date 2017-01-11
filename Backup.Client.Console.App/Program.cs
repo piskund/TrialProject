@@ -14,11 +14,18 @@ namespace Backup.Client.Console.App
             IUnityContainer container = new UnityContainer();
             container.LoadConfiguration();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            var worker = ServiceLocator.Current.GetInstance<IWorker>() as BackupWorker;
-            worker.BackupConfig.SourceFolderPath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
-            worker.BackupConfig.DestinationFolderPath = @"\\192.168.0.100\share1";
-            worker.BackupConfig.DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"};
-            worker.DoWork();
+
+            //var worker = ServiceLocator.Current.GetInstance<IWorker>() as BackupWorker;
+            //worker.BackupConfig.SourceFolderPath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
+            //worker.BackupConfig.DestinationFolderPath = @"\\192.168.0.100\share1";
+            //worker.BackupConfig.DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"};
+            //worker.DoWork();
+
+            //var bm = new BackupManager();
+            //bm.Execute();
+            //bm.Execute();
+            //bm.Execute();
+
             System.Console.ReadKey();
         }
     }

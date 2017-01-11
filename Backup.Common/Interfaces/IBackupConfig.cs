@@ -13,7 +13,7 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The client ip address.
         /// </value>
-        IPAddress ClientIpAddress { get; set; }
+        IPAddress ClientIpAddress { get; }
 
         /// <summary>
         /// Gets or sets the source folder path.
@@ -21,7 +21,7 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The source folder path.
         /// </value>
-        string SourceFolderPath { get; set; }
+        string SourceFolderPath { get; }
 
         /// <summary>
         /// Gets or sets the source credential.
@@ -29,7 +29,7 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The source credential.
         /// </value>
-        ICredentialInfo SourceCredential { get; set; }
+        ICredentialInfo SourceCredential { get; }
 
         /// <summary>
         /// Gets or sets the destination folder path.
@@ -37,7 +37,7 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The destination folder path.
         /// </value>
-        string DestinationFolderPath { get; set; }
+        string DestinationFolderPath { get; }
 
         /// <summary>
         /// Gets or sets the destination credential.
@@ -45,6 +45,6 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The destination credential.
         /// </value>
-        ICredentialInfo DestinationCredential { get; set; }
+        ICredentialInfo DestinationCredential { get; }
     }
 }
