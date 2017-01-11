@@ -1,8 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.Security.Principal;
+using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
 using Backup.Client.BL.Unity;
 using Backup.Common.DTO;
+using Backup.Common.Logger;
+using CodeContracts;
 
 namespace Backup.Client.BL
 {
@@ -12,20 +14,26 @@ namespace Backup.Client.BL
     /// <seealso cref="Backup.Client.BL.Interfaces.IWorker" />
     public class BackupWorker : IWorker
     {
+        private readonly ILogger _logger;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
         /// </summary>
-        public BackupWorker()
+        public BackupWorker(ILogger logger) : this(logger, new BackupConfig())
         {
         }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
         /// </summary>
+        /// <param name="logger">The logger.</param>
         /// <param name="backupConfig">The backup configuration.</param>
-        public BackupWorker(BackupConfig backupConfig)
+        public BackupWorker(ILogger logger, BackupConfig backupConfig)
         {
+            Requires.NotNull(logger, nameof(logger));
+            Requires.NotNull(backupConfig, nameof(backupConfig));
             BackupConfig = backupConfig;
+            _logger = logger;
         }
 
         /// <summary>
@@ -41,37 +49,28 @@ namespace Backup.Client.BL
         /// </summary>
         public void DoWork()
         {
-            var filesList = Directory.GetFiles(BackupConfig.SourceFolderPath);
-            foreach (var sourceFullName in filesList)
-            {
-                var destinationFullName = Path.Combine(BackupConfig.DestinationFolderPath,
-                    Path.GetFileName(sourceFullName));
-                BackupFile(sourceFullName, destinationFullName, BackupConfig);
-            }
+            _logger.LogInfo(
+                $"Backup work started. \n Source: {BackupConfig.SourceFolderPath} \n Destination: {BackupConfig.DestinationFolderPath} \n");
+            PerformBackup(BackupConfig);
+            _logger.LogInfo(
+                $"Backup work finished. \n Source: {BackupConfig.SourceFolderPath} \n Destination: {BackupConfig.DestinationFolderPath} \n");
         }
 
         /// <summary>
-        /// Backups the file.
+        ///     Backups the file.
         /// </summary>
-        /// <param name="sourceFullName">Full name of the source.</param>
-        /// <param name="destinationFullName">Full name of the destination.</param>
         /// <param name="backupConfig">The backup configuration.</param>
         [ActivityLog]
-        internal static void BackupFile(string sourceFullName, string destinationFullName, BackupConfig backupConfig)
+        private void PerformBackup(BackupConfig backupConfig)
         {
-            //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
-            //var identity = new WindowsIdentity(credential);
-            //var context = identity.Impersonate();
-
-            try
+            var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken();
+            using (destinationImpersonationToken)
             {
-                File.Copy(sourceFullName, destinationFullName, true);
-            }
-            catch (Exception e)
-            {
-                var tmp = e.Message;
-                //context.Undo();
-                throw;
+                // Use the token handle returned by LogonUser.
+                using (WindowsIdentity.Impersonate(destinationImpersonationToken.DangerousGetHandle()))
+                {
+                    FilesManagementHelper.DirectoryCopy(backupConfig);
+                }
             }
         }
     }

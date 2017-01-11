@@ -2,7 +2,9 @@
 using System.Linq;
 using Backup.Client.BL;
 using Backup.Common.DTO;
+using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace UnitTests.Backup.Client.BL.FunctionalTests
 {
@@ -32,12 +34,14 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
         public void DoBackup_SavesTestDataToTempDestination()
         {
             // Arrange
+            var loggerMock = new Mock<ILogger>();
             var backupConfig = new BackupConfig
             {
                 SourceFolderPath = SourcePath,
-                DestinationFolderPath = DestinationPath
+                DestinationFolderPath = DestinationPath,
+                DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"}
             };
-            var backupWorker = new BackupWorker(backupConfig);
+            var backupWorker = new BackupWorker(loggerMock.Object, backupConfig);
 
             // Act
             backupWorker.DoWork();
