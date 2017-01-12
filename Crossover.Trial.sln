@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Backup.Client.BL"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backup.Client.Console.App", "Backup.Client.Console.App\Backup.Client.Console.App.csproj", "{E80F342B-712E-4179-9447-83443F65EDAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backup.Web.API", "Backup.Web.API\Backup.Web.API.csproj", "{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Backup.Web.API", "UnitTests.Backup.Web.API\UnitTests.Backup.Web.API.csproj", "{35689D04-2F49-4A45-A503-5636CFE01DB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{E80F342B-712E-4179-9447-83443F65EDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E80F342B-712E-4179-9447-83443F65EDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E80F342B-712E-4179-9447-83443F65EDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

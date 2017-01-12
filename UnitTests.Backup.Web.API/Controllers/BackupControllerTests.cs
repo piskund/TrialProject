@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 
-namespace UnitTests.Backup.REST.Web.API.Controllers
+namespace UnitTests.Backup.Web.API.Controllers
 {
     [TestClass]
     public class BackupControllerTests
