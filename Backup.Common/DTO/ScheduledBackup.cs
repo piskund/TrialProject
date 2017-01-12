@@ -7,7 +7,7 @@ namespace Backup.Common.DTO
     ///     Holds information about scheduled backup.
     /// </summary>
     [Serializable]
-    public class ScheduledBackup : IScheduledJob
+    public class ScheduledBackup : IScheduledBackup
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ScheduledBackup" /> class.
@@ -42,6 +42,6 @@ namespace Backup.Common.DTO
         /// <value>
         /// The backup configuration.
         /// </value>
-        IBackupConfig IScheduledJob.BackupConfig => BackupConfig;
+        IBackupConfig IScheduledBackup.BackupConfig => BackupConfig;
     }
 }

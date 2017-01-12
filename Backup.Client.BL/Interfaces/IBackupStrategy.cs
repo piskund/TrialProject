@@ -10,7 +10,7 @@ namespace Backup.Client.BL.Interfaces
     /// <summary>
     ///     Represents an item in a work queue.
     /// </summary>
-    public interface IBackupWorker
+    public interface IBackupStrategy
     {
         /// <summary>
         ///     Performs the required work.

@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  BackupWorker.cs created by DEP on 2017/01/12
+//  BackupStrategyCopyFiles.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Security.Principal;
@@ -8,43 +8,45 @@ using Backup.Client.BL.Interfaces;
 using Backup.Common.Interfaces;
 using Backup.Common.Logger;
 
-namespace Backup.Client.BL
+namespace Backup.Client.BL.BackupLogic
 {
     /// <summary>
-    ///     Performs backup work.
+    ///  Performs copying files. This is default backup strategy.
     /// </summary>
-    /// <seealso cref="Backup.Client.BL.Interfaces.IBackupWorker" />
-    public class BackupWorker : IBackupWorker
+    /// <seealso cref="Backup.Client.BL.Interfaces.IBackupStrategy" />
+    public class BackupStrategyCopyFiles : IBackupStrategy
     {
         private readonly ILogger _logger;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="BackupWorker" /> class.
+        /// Initializes a new instance of the <see cref="BackupStrategyCopyFiles" /> class.
         /// </summary>
-        public BackupWorker(ILogger logger)
+        /// <param name="logger">The logger.</param>
+        public BackupStrategyCopyFiles(ILogger logger)
         {
             _logger = logger;
         }
 
         /// <summary>
-        ///     Performs the required work.
+        /// Performs the required work.
         /// </summary>
+        /// <param name="config">The configuration.</param>
         public void DoWork(IBackupConfig config)
         {
             _logger.LogInfo(
-                $"Backup work started. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
+                $"Copying files started. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
 
-            PerformBackup(config);
+            CopyFilesImpersonated(config);
 
             _logger.LogInfo(
-                $"Backup work finished. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
+                $"Copying files finished. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
         }
 
         /// <summary>
-        ///     Backups the file.
+        /// Backups the file.
         /// </summary>
         /// <param name="backupConfig">The backup configuration.</param>
-        private void PerformBackup(IBackupConfig backupConfig)
+        private void CopyFilesImpersonated(IBackupConfig backupConfig)
         {
             var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken();
             using (destinationImpersonationToken)

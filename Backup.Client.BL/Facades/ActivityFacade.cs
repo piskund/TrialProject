@@ -8,7 +8,7 @@ using System.Net;
 using Backup.Client.BL.Interfaces;
 using Backup.Common.DTO;
 
-namespace Backup.Client.BL
+namespace Backup.Client.BL.Facades
 {
     public class ActivityFacade : IActivityFacade
     {

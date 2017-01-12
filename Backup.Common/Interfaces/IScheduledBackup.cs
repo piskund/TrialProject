@@ -2,7 +2,7 @@
 
 namespace Backup.Common.Interfaces
 {
-    public interface IScheduledJob
+    public interface IScheduledBackup
     {
         /// <summary>
         /// Gets the scheduled date time.

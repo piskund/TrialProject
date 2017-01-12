@@ -49,7 +49,7 @@
     <Compile Include="DTO\ScheduledBackup.cs" />
     <Compile Include="Interfaces\IBackupConfig.cs" />
     <Compile Include="Interfaces\ICredentialInfo.cs" />
-    <Compile Include="Interfaces\IScheduledJob.cs" />
+    <Compile Include="Interfaces\IScheduledBackup.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\LogEntry.cs" />
     <Compile Include="Logger\LoggerExtension.cs" />
