@@ -1,13 +1,11 @@
-using System;
 using System.Web.Http;
 using System.Web.Mvc;
 using Backup.Web.API.Areas.HelpPage.ModelDescriptions;
-using Backup.Web.API.Areas.HelpPage.Models;
 
 namespace Backup.Web.API.Areas.HelpPage.Controllers
 {
     /// <summary>
-    /// The controller that will handle requests for the help page.
+    ///     The controller that will handle requests for the help page.
     /// </summary>
     public class HelpController : Controller
     {
@@ -23,7 +21,7 @@ namespace Backup.Web.API.Areas.HelpPage.Controllers
             Configuration = config;
         }
 
-        public HttpConfiguration Configuration { get; private set; }
+        public HttpConfiguration Configuration { get; }
 
         public ActionResult Index()
         {
@@ -33,13 +31,11 @@ namespace Backup.Web.API.Areas.HelpPage.Controllers
 
         public ActionResult Api(string apiId)
         {
-            if (!String.IsNullOrEmpty(apiId))
+            if (!string.IsNullOrEmpty(apiId))
             {
-                HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
+                var apiModel = Configuration.GetHelpPageApiModel(apiId);
                 if (apiModel != null)
-                {
                     return View(apiModel);
-                }
             }
 
             return View(ErrorViewName);
@@ -47,14 +43,12 @@ namespace Backup.Web.API.Areas.HelpPage.Controllers
 
         public ActionResult ResourceModel(string modelName)
         {
-            if (!String.IsNullOrEmpty(modelName))
+            if (!string.IsNullOrEmpty(modelName))
             {
-                ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
+                var modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
                 ModelDescription modelDescription;
                 if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
-                {
                     return View(modelDescription);
-                }
             }
 
             return View(ErrorViewName);
