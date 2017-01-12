@@ -22,6 +22,12 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
         [TestMethod]
         public void DoBackup_SavesTestDataToTempDestination()
         {
+            //var worker = ServiceLocator.Current.GetInstance<IWorker>() as BackupWorker;
+            //worker.BackupConfig.SourceFolderPath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
+            //worker.BackupConfig.DestinationFolderPath = @"\\192.168.0.100\share1";
+            //worker.BackupConfig.DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"};
+            //worker.DoWork();
+
             // Arrange
             var loggerMock = new Mock<ILogger>();
             var backupConfig = new BackupConfig

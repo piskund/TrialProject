@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Backup.Client.BL;
 using Backup.Client.BL.BackupLogic;
 using Backup.Client.BL.Interfaces;
@@ -32,7 +33,7 @@ namespace UnitTests.Backup.Client.BL
             var backupManager = new BackupManager(backupJobs);
 
             // Act
-            backupManager.ExecuteJobs(false);
+            backupManager.ExecuteJobs(new CancellationToken());
 
             // Assert
             foreach (var backupJob in backupJobs)
@@ -42,28 +43,49 @@ namespace UnitTests.Backup.Client.BL
         }
 
         [TestMethod]
+        public void BackupManager_ExecutesScheduledJobsByDateTime()
+        {
+            // Arrange
+            var backupJobs = new List<IScheduledBackupJob>();
+
+            for (var i = 0; i < 3; i++)
+            {
+                backupJobs.Add(new DelayedJob());
+            }
+            var backupManager = new BackupManager(backupJobs);
+
+            // Act
+            var task = backupManager.ExecuteJobsAsync(new CancellationToken());
+            // Emulate current thread work.
+            Thread.Sleep(300);
+
+            // Assert
+            Assert.IsTrue(task.IsCompleted);
+        }
+
+        [TestMethod]
         public void BackupManager_SortsScheduledJobsByDateTime()
         {
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
             var resultDates = new List<DateTime>();
-            fixture.Register<IScheduledBackupJob>(() => new FakeJob(resultDates, fixture.Create<DateTime>()));
+            fixture.Register<IScheduledBackupJob>(() => new DateStoringJob(resultDates, fixture.Create<DateTime>()));
             var backupJobs = fixture.CreateMany<IScheduledBackupJob>();
             var initialDates = backupJobs.Select(j => j.ScheduledDateTime).ToList();
             var backupManager = new BackupManager(backupJobs);
 
             // Act
-            backupManager.ExecuteJobs(false);
+            backupManager.ExecuteJobs(new CancellationToken());
 
             // Assert
             Assert.IsTrue(initialDates.OrderBy(d => d).SequenceEqual(resultDates));
         }
 
-        private class FakeJob : IScheduledBackupJob
+        private class DateStoringJob : IScheduledBackupJob
         {
             private readonly List<DateTime> _resultDates;
 
-            public FakeJob(List<DateTime> resultDates, DateTime scheduledDateTime)
+            public DateStoringJob(List<DateTime> resultDates, DateTime scheduledDateTime)
             {
                 _resultDates = resultDates;
                 ScheduledDateTime = scheduledDateTime;
@@ -72,6 +94,28 @@ namespace UnitTests.Backup.Client.BL
             public void Execute()
             {
                 _resultDates.Add(ScheduledDateTime);
+            }
+
+            public DateTime ScheduledDateTime { get; }
+
+            public IBackupConfig BackupConfig { get; }
+        }
+
+        private class DelayedJob : IScheduledBackupJob
+        {
+            private static int _delay = 50;
+
+            public DelayedJob()
+            {
+                ScheduledDateTime = DateTime.UtcNow.AddMilliseconds(_delay);
+                _delay += 100;
+            }
+
+            public void Execute()
+            {
+                Console.WriteLine($"Scheduled at {ScheduledDateTime.Second}:{ScheduledDateTime.Millisecond}");
+                Console.WriteLine($"Executed at {DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}");
+                Console.WriteLine();
             }
 
             public DateTime ScheduledDateTime { get; }

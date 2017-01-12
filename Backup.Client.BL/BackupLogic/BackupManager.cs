@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Backup.Client.BL.Interfaces;
 
@@ -29,9 +30,37 @@ namespace Backup.Client.BL
         }
 
         /// <summary>
-        /// Executes all tasks from the queue one by one.
+        /// Executes all jobs from the queue one by one.
         /// </summary>
-        internal void ExecuteJobs(bool isScheduledExecution)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        internal void ExecuteJobs(CancellationToken cancellationToken)
+        {
+            while (!_queue.IsCompleted)
+            {
+                var t = ExecuteJob(false, cancellationToken);
+                t.Wait();
+                if (cancellationToken.IsCancellationRequested)
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Executes all jobs from the queue one by one asynchronously.
+        /// </summary>
+        internal async Task ExecuteJobsAsync(CancellationToken cancellationToken)
+        {
+            while (!_queue.IsCompleted)
+            {
+                await ExecuteJob(true, cancellationToken);
+                if (cancellationToken.IsCancellationRequested)
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Executes top job from the queue.
+        /// </summary>
+        private async Task ExecuteJob(bool isScheduledExecution, CancellationToken cancellationToken)
         {
             if (!_queue.IsCompleted)
             {
@@ -52,11 +81,8 @@ namespace Backup.Client.BL
                 {
                     await Task.Delay(delay);
                     job.Execute();
-                });
-                t.Wait();
-
-                // Execute tasks one by one;
-                ExecuteJobs(isScheduledExecution);
+                }, cancellationToken);
+                await t;
             }
         }
 
