@@ -20,13 +20,18 @@ namespace Backup.Client.BL
         private readonly BlockingCollection<IScheduledBackupJob> _queue = new BlockingCollection<IScheduledBackupJob>();
 
         /// <summary>
+        /// The token source for issuing the cancelation request.
+        /// </summary>
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BackupManager" /> class.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
-        /// <param name="worker">The worker.</param>
         internal BackupManager(IEnumerable<IScheduledBackupJob> scheduledJobs)
         {
             QueueProducer(scheduledJobs);
+            //ExecuteJobsAsync(_cancellationTokenSource.Token);
         }
 
         /// <summary>
@@ -38,7 +43,7 @@ namespace Backup.Client.BL
             while (!_queue.IsCompleted)
             {
                 var t = ExecuteJob(false, cancellationToken);
-                t.Wait();
+                t.Wait(cancellationToken);
                 if (cancellationToken.IsCancellationRequested)
                     break;
             }
@@ -79,7 +84,7 @@ namespace Backup.Client.BL
 
                 var t = Task.Run(async delegate
                 {
-                    await Task.Delay(delay);
+                    await Task.Delay(delay, cancellationToken);
                     job.Execute();
                 }, cancellationToken);
                 await t;
@@ -90,7 +95,6 @@ namespace Backup.Client.BL
         /// Builds the queue.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
-        /// <param name="action">The action.</param>
         private void QueueProducer(IEnumerable<IScheduledBackupJob> scheduledJobs)
         {
             var sortedJobs = scheduledJobs.OrderBy(j => j.ScheduledDateTime);

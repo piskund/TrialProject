@@ -36,6 +36,17 @@ namespace Backup.REST.Web.API.Controllers
         }
 
         /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <returns></returns>
+        public ScheduledBackup Get(int id, string ipAddress)
+        {
+            return new ScheduledBackup(DateTime.UtcNow, null) {Id = id};
+        }
+
+        /// <summary>
         /// Creates the specified backup.
         /// </summary>
         /// <param name="backup">The backup.</param>
