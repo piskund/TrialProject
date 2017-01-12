@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="DTO\ActivityInfo.cs" />
     <Compile Include="DTO\ActivivtyStatus.cs" />
-    <Compile Include="DTO\ScheduledBackup.cs" />
+    <Compile Include="Entities\ScheduledBackup.cs" />
     <Compile Include="Interfaces\IBackupConfig.cs" />
     <Compile Include="Interfaces\ICredentialInfo.cs" />
     <Compile Include="Interfaces\IScheduledBackup.cs" />
@@ -61,6 +61,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

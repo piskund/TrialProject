@@ -1,7 +1,8 @@
 ﻿using System;
+using Backup.Common.DTO;
 using Backup.Common.Interfaces;
 
-namespace Backup.Common.DTO
+namespace Backup.Common.Entities
 {
     /// <summary>
     ///     Holds information about scheduled backup.
@@ -19,6 +20,14 @@ namespace Backup.Common.DTO
             ScheduledDateTime = scheduledDateTime;
             BackupConfig = backupConfig;
         }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public int Id { get; set; }
 
         /// <summary>
         ///     Gets or sets the scheduled date time.

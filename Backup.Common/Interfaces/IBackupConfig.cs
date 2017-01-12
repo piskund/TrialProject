@@ -13,7 +13,7 @@ namespace Backup.Common.Interfaces
         /// <value>
         /// The client ip address.
         /// </value>
-        IPAddress ClientIpAddress { get; }
+        string ClientIpAddress { get; }
 
         /// <summary>
         /// Gets or sets the source folder path.
