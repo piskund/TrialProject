@@ -1,4 +1,8 @@
-﻿using Backup.Client.BL.Unity;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  IBackupWorker.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using Backup.Client.BL.Unity;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL.Interfaces

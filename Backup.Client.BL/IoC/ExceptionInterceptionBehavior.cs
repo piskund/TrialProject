@@ -1,4 +1,8 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ExceptionInterceptionBehavior.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using Backup.Common.Logger;
 using Microsoft.Practices.ServiceLocation;

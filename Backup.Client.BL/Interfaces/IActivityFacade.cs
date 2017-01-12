@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  IActivityFacade.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Net;
 using Backup.Common.DTO;
 
@@ -10,6 +14,13 @@ namespace Backup.Client.BL.Interfaces
     public interface IActivityFacade
     {
         /// <summary>
+        /// Gets all activities.
+        /// </summary>
+        /// <param name="address">The address.</param>
+        /// <returns></returns>
+        IEnumerable<ActivityInfo> GetAllActivities(IPAddress address);
+
+        /// <summary>
         /// Saves the specified activity information.
         /// </summary>
         /// <param name="activityInfo">The activity information.</param>
@@ -20,12 +31,5 @@ namespace Backup.Client.BL.Interfaces
         /// </summary>
         /// <param name="activities">The activities.</param>
         void SaveBatch(IEnumerable<ActivityInfo> activities);
-
-        /// <summary>
-        /// Gets all activities.
-        /// </summary>
-        /// <param name="address">The address.</param>
-        /// <returns></returns>
-        IEnumerable<ActivityInfo> GetAllActivities(IPAddress address);
     }
 }

@@ -1,4 +1,8 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ActivityLogAttribute.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 

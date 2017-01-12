@@ -1,4 +1,8 @@
-﻿using Backup.Client.BL.Interfaces;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ActivityLogHandler.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using Backup.Client.BL.Interfaces;
 using Backup.Common.DTO;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;

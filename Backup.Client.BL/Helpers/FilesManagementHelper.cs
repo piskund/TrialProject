@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  FilesManagementHelper.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System.IO;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL.Helpers

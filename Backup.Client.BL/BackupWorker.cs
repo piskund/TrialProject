@@ -1,4 +1,8 @@
-﻿using System.Security.Principal;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  BackupWorker.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System.Security.Principal;
 using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
 using Backup.Common.Interfaces;

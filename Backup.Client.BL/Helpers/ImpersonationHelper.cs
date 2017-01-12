@@ -1,4 +1,8 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ImpersonationHelper.cs created by DEP on 2017/01/12
+// -------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.ComponentModel;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
@@ -17,10 +21,6 @@ namespace Backup.Client.BL.Helpers
     /// </summary>
     public static class ImpersonationHelper
     {
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern bool LogonUser(string lpszUsername, string lpszDomain, string lpszPassword,
-            int dwLogonType, int dwLogonProvider, out SafeTokenHandle phToken);
-
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern bool CloseHandle(IntPtr handle);
 
@@ -37,6 +37,10 @@ namespace Backup.Client.BL.Helpers
             Requires.NotNullOrEmpty(credentialInfo.Password, nameof(credentialInfo.Password));
             return GetImpersonationToken(credentialInfo.UserName, credentialInfo.Password);
         }
+
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool LogonUser(string lpszUsername, string lpszDomain, string lpszPassword,
+            int dwLogonType, int dwLogonProvider, out SafeTokenHandle phToken);
 
         /// <summary>
         ///     Gets the impersonation token.
@@ -78,16 +82,16 @@ namespace Backup.Client.BL.Helpers
             {
             }
 
+            protected override bool ReleaseHandle()
+            {
+                return CloseHandle(handle);
+            }
+
             [DllImport("kernel32.dll")]
             [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
             private static extern bool CloseHandle(IntPtr handle);
-
-            protected override bool ReleaseHandle()
-            {
-                return CloseHandle(handle);
-            }
         }
     }
 }
