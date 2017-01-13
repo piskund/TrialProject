@@ -26,6 +26,8 @@ namespace Backup.Client.BL
             HttpClient.DefaultRequestHeaders.Accept.Clear();
             HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            //var status = RegisterNewUserAsync(DefaultUserName, DefaultPassword).Result;
+
             var token = GetAccessToken(DefaultUserName, DefaultPassword);
             if (!string.IsNullOrWhiteSpace(token))
             {
