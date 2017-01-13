@@ -89,7 +89,7 @@
     <Compile Include="IoC\ActivityLogAttribute.cs" />
     <Compile Include="IoC\ActivityLogHandler.cs" />
     <Compile Include="IoC\ExceptionInterceptionBehavior.cs" />
-    <Compile Include="WebAPIRequestsManager.cs" />
+    <Compile Include="WebApiRequestsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">

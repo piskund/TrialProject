@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Web.Http;
 using Backup.Common.Entities;
 
-namespace Backup.REST.Web.API.Controllers
+namespace Backup.Web.API.Controllers
 {
     /// <summary>
     /// Provides CRUD and enable/disable functionality on backups.
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
+    [Authorize]
     public class BackupController : ApiController
     {
         /// <summary>

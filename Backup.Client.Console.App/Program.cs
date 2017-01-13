@@ -2,6 +2,8 @@
 //  Program.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
+using Backup.Client.BL;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
@@ -15,7 +17,7 @@ namespace Backup.Client.Console.App
             IUnityContainer container = new UnityContainer();
             container.LoadConfiguration();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-
+            var res = WebApiRequestsManager.GetScheduledBackupsAsync("127.0.0.1").Result;
             System.Console.ReadKey();
         }
     }
