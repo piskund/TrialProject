@@ -8,7 +8,7 @@ namespace Backup.Common.Entities
     ///     Holds information about scheduled backup.
     /// </summary>
     [Serializable]
-    public class ScheduledBackup : IScheduledBackup
+    public class ScheduledBackup : IEntity, IScheduledBackup
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ScheduledBackup" /> class.

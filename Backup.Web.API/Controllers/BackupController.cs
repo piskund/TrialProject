@@ -17,11 +17,12 @@ namespace Backup.Web.API.Controllers
     public class BackupController : ApiController
     {
         /// <summary>
-        /// Deletes the specified backup.
+        /// Gets the list of all backups.
         /// </summary>
-        /// <param name="id">The identifier.</param>
-        public void Delete(int id)
+        /// <returns>List of backups</returns>
+        public IEnumerable<ScheduledBackup> Get()
         {
+            return new[] { new ScheduledBackup(DateTime.UtcNow, null), new ScheduledBackup(DateTime.UtcNow, null) };
         }
 
         /// <summary>
@@ -37,12 +38,11 @@ namespace Backup.Web.API.Controllers
         }
 
         /// <summary>
-        /// Gets the specified identifier.
+        /// Gets the specified backup.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="ipAddress">The ip address.</param>
-        /// <returns></returns>
-        public ScheduledBackup Get(int id, string ipAddress)
+        /// <returns>The backup</returns>
+        public ScheduledBackup Get(int id)
         {
             return new ScheduledBackup(DateTime.UtcNow, null) {Id = id};
         }
@@ -61,6 +61,14 @@ namespace Backup.Web.API.Controllers
         /// <param name="id">The identifier.</param>
         /// <param name="backup">The backup.</param>
         public void Put(int id, [FromBody] ScheduledBackup backup)
+        {
+        }
+
+        /// <summary>
+        /// Deletes the specified backup.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        public void Delete(int id)
         {
         }
     }

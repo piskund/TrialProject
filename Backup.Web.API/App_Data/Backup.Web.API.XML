@@ -502,19 +502,19 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="T:Backup.REST.Web.API.Controllers.BackupController">
+        <member name="T:Backup.Web.API.Controllers.BackupController">
             <summary>
             Provides CRUD and enable/disable functionality on backups.
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:Backup.REST.Web.API.Controllers.BackupController.Delete(System.Int32)">
+        <member name="M:Backup.Web.API.Controllers.BackupController.Get">
             <summary>
-            Deletes the specified backup.
+            Gets the list of all backups.
             </summary>
-            <param name="id">The identifier.</param>
+            <returns>List of backups</returns>
         </member>
-        <member name="M:Backup.REST.Web.API.Controllers.BackupController.Get(System.String)">
+        <member name="M:Backup.Web.API.Controllers.BackupController.Get(System.String)">
             <summary>
             Gets the list of backups.
             </summary>
@@ -523,26 +523,31 @@
             List of backups by Ip
             </returns>
         </member>
-        <member name="M:Backup.REST.Web.API.Controllers.BackupController.Get(System.Int32,System.String)">
+        <member name="M:Backup.Web.API.Controllers.BackupController.Get(System.Int32)">
             <summary>
-            Gets the specified identifier.
+            Gets the specified backup.
             </summary>
             <param name="id">The identifier.</param>
-            <param name="ipAddress">The ip address.</param>
-            <returns></returns>
+            <returns>The backup</returns>
         </member>
-        <member name="M:Backup.REST.Web.API.Controllers.BackupController.Post(Backup.Common.Entities.ScheduledBackup)">
+        <member name="M:Backup.Web.API.Controllers.BackupController.Post(Backup.Common.Entities.ScheduledBackup)">
             <summary>
             Creates the specified backup.
             </summary>
             <param name="backup">The backup.</param>
         </member>
-        <member name="M:Backup.REST.Web.API.Controllers.BackupController.Put(System.Int32,Backup.Common.Entities.ScheduledBackup)">
+        <member name="M:Backup.Web.API.Controllers.BackupController.Put(System.Int32,Backup.Common.Entities.ScheduledBackup)">
             <summary>
             Updates the specified backup.
             </summary>
             <param name="id">The identifier.</param>
             <param name="backup">The backup.</param>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.BackupController.Delete(System.Int32)">
+            <summary>
+            Deletes the specified backup.
+            </summary>
+            <param name="id">The identifier.</param>
         </member>
     </members>
 </doc>

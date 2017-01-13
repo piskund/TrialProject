@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Backup.Common.Entities;
-using Backup.REST.Web.API.Controllers;
+using Backup.Web.API.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoMoq;
+using UnitTests.Backup.Web.API.AutoFixture;
 
 namespace UnitTests.Backup.Web.API.Controllers
 {
@@ -16,7 +16,7 @@ namespace UnitTests.Backup.Web.API.Controllers
         public void Get()
         {
             // Arrange
-            var controller = new BackupController();
+            var controller = GetBackupController();
 
             // Act
             var result = controller.Get(LocalHost);
@@ -32,8 +32,8 @@ namespace UnitTests.Backup.Web.API.Controllers
         public void Post()
         {
             // Arrange
-            var controller = new BackupController();
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var fixture = new Fixture();
+            var controller = GetBackupController(fixture);
             var backup = fixture.Freeze<ScheduledBackup>();
 
             // Act
@@ -46,8 +46,8 @@ namespace UnitTests.Backup.Web.API.Controllers
         public void Put()
         {
             // Arrange
-            var controller = new BackupController();
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var fixture = new Fixture();
+            var controller = GetBackupController(fixture);
             var backup = fixture.Freeze<ScheduledBackup>();
 
             // Act
@@ -60,14 +60,19 @@ namespace UnitTests.Backup.Web.API.Controllers
         public void Delete()
         {
             // Arrange
-            var controller = new BackupController();
-            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var fixture = new Fixture();
+            var controller = GetBackupController(fixture);
             var id = fixture.Freeze<int>();
 
             // Act
             controller.Delete(id);
 
             // Assert
+        }
+
+        private static BackupController GetBackupController(Fixture fixture = null)
+        {
+            return AutofixtureHelpers.GetMockedApiController<BackupController>(fixture);
         }
     }
 }

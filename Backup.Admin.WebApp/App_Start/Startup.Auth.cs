@@ -1,5 +1,5 @@
 ﻿using System;
-using Backup.Admin.WebApp.Models;
+using Backup.DAL.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

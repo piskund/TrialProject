@@ -204,7 +204,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -280,6 +279,10 @@
     <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">
       <Project>{2aeee152-1092-4176-a305-e1ae0fa27e9f}</Project>
       <Name>Backup.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Backup.DAL\Backup.DAL.csproj">
+      <Project>{c44012e3-2855-4a35-856c-1ef1779eff58}</Project>
+      <Name>Backup.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
