@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using Backup.Client.BL.Interfaces;
-using Backup.Common.DTO;
 using Backup.Common.Entities;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;

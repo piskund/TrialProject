@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using Backup.Client.BL;
-using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;

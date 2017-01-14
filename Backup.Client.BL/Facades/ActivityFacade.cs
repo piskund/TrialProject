@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Backup.Client.BL.Interfaces;
-using Backup.Common.DTO;
+using Backup.Common.Entities;
 
 namespace Backup.Client.BL.Facades
 {

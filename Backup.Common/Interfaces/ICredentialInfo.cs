@@ -1,4 +1,8 @@
-﻿namespace Backup.Common.Interfaces
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ICredentialInfo.cs created by DEP on 2017/01/14
+// -------------------------------------------------------------------------------------------------------------
+
+namespace Backup.Common.Interfaces
 {
     /// <summary>
     /// Contains credential info.

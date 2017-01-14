@@ -57,6 +57,13 @@ namespace Backup.DAL.Interfaces
         IEnumerable<T> GetAll();
 
         /// <summary>
+        /// Gets all by ip.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        /// <returns></returns>
+        IEnumerable<T> GetAllByIp(string ipAddress);
+
+        /// <summary>
         /// Query entities from the repository that match the linq expression selection criteria
         /// </summary>
         /// <returns>

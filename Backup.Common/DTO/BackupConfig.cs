@@ -13,16 +13,8 @@ namespace Backup.Common.Entities
     /// </summary>
     /// <seealso cref="Backup.Common.Interfaces.IBackupConfig" />
     [Serializable]
-    public class BackupConfig : IBackupConfig, IEntity
+    public class BackupConfig : IBackupConfig
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the client ip address.
         /// </summary>

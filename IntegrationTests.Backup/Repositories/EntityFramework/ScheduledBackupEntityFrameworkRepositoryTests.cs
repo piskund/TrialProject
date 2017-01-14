@@ -3,6 +3,7 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using Backup.Common.Entities;
+using Backup.DAL.EntityFramework.Repositories;
 using Backup.DAL.Repositories;
 using Backup.DAL.Repositories.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,7 +16,7 @@ namespace IntegrationTests.Backup.Repositories.EntityFramework
     public class ScheduledBackupEntityFrameworkRepositoryTests
     {
         [TestMethod]
-        //[Ignore]
+        [Ignore]
         public void AddTest()
         {
             // Arrange
@@ -29,7 +30,6 @@ namespace IntegrationTests.Backup.Repositories.EntityFramework
 
             // Assert
             Assert.AreEqual(entity, newEntity);
-            sut.Delete(entity);
         }
     }
 }

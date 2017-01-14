@@ -1,7 +1,14 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  IScheduledBackup.cs created by DEP on 2017/01/14
+// -------------------------------------------------------------------------------------------------------------
+
+using System;
 
 namespace Backup.Common.Interfaces
 {
+    /// <summary>
+    /// Defines scheduled backup.
+    /// </summary>
     public interface IScheduledBackup
     {
         /// <summary>

@@ -2,7 +2,6 @@
 //  BackupController.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Backup.Common.Entities;

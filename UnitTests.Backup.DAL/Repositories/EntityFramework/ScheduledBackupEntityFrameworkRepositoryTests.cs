@@ -3,9 +3,8 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Data.Entity;
-using System.Linq;
 using Backup.Common.Entities;
-using Backup.DAL.Contexts;
+using Backup.DAL.EntityFramework.Repositories;
 using Backup.DAL.Repositories.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -18,40 +17,39 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
     public class ScheduledBackupEntityFrameworkRepositoryTests
     {
         [TestMethod]
-        public void AddTest()
+        public void RepositoryAdd_CreatesScheduledBackupViaContext()
         {
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
-            var dbSet = new Mock<DbSet<ScheduledBackup>>();
-            var backupConfigMock = new Mock<BackupConfig>();
-            fixture.Register(() => dbSet.Object);
-            var context = fixture.Create<ScheduledBackupContext>();
             var entity = fixture.Freeze<ScheduledBackup>();
-            var sut = new ScheduledBackupEntityFrameworkRepository(context);
+            var mockSet = new Mock<DbSet<ScheduledBackup>>();
 
-            // Act
+            var mockContext = new Mock<BackupContext>();
+            mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
+
+            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
             sut.Add(entity);
 
-            // Assert
-            dbSet.Verify(d => d.Add(entity), Times.Once);
+            mockSet.Verify(m => m.Add(entity), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
 
         [TestMethod]
-        public void DeleteTest()
+        public void RepositoryDelete_RemovesScheduledBackupViaContext()
         {
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
-            var dbSet = new Mock<DbSet<ScheduledBackup>>();
-            fixture.Register(() => dbSet.Object);
-            var context = fixture.Create<ScheduledBackupContext>();
             var entity = fixture.Freeze<ScheduledBackup>();
-            var sut = new ScheduledBackupEntityFrameworkRepository(context);
+            var mockSet = new Mock<DbSet<ScheduledBackup>>();
 
-            // Act
+            var mockContext = new Mock<BackupContext>();
+            mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
+
+            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
             sut.Delete(entity);
 
-            // Assert
-            dbSet.Verify(d => d.Remove(entity), Times.Once);
+            mockSet.Verify(m => m.Remove(entity), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
     }
 }

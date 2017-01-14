@@ -1,8 +1,5 @@
-﻿// -------------------------------------------------------------------------------------------------------------
-//  ScheduledBackup.cs created by DEP on 2017/01/14
-// -------------------------------------------------------------------------------------------------------------
-
-using System;
+﻿using System;
+using Backup.Common.DTO;
 using Backup.Common.Interfaces;
 
 namespace Backup.Common.Entities
@@ -18,8 +15,7 @@ namespace Backup.Common.Entities
         /// Initializes a new instance of the <see cref="ScheduledBackup"/> class.
         /// </summary>
         public ScheduledBackup()
-        {
-        }
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduledBackup" /> class.
@@ -31,14 +27,6 @@ namespace Backup.Common.Entities
             ScheduledDateTime = scheduledDateTime;
             BackupConfig = backupConfig;
         }
-
-        /// <summary>
-        ///     Gets or sets the backup configuration.
-        /// </summary>
-        /// <value>
-        ///     The backup configuration.
-        /// </value>
-        public virtual BackupConfig BackupConfig { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -55,6 +43,14 @@ namespace Backup.Common.Entities
         ///     The scheduled date time.
         /// </value>
         public DateTime ScheduledDateTime { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the backup configuration.
+        /// </summary>
+        /// <value>
+        ///     The backup configuration.
+        /// </value>
+        public BackupConfig BackupConfig { get; set; }
 
         /// <summary>
         /// Gets the backup configuration (explicit interface implementation).

@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 using System.Net;
-using Backup.Common.DTO;
+using Backup.Common.Entities;
 
 namespace Backup.Client.BL.Interfaces
 {

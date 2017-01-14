@@ -1,16 +1,12 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  IScheduledBackupRepository.cs created by DEP on 2017/01/13
+//  IActivityInfoRepository.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Backup.Common.Entities;
 
 namespace Backup.DAL.Interfaces
 {
-    /// <summary>
-    /// Defines repository contract for ScheduledBackup entity.
-    /// </summary>
-    public interface IScheduledBackupRepository : IRepository<ScheduledBackup>
+    public interface IActivityInfoRepository : IRepository<ActivityInfo>
     {
     }
 }

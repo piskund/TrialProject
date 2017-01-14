@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\ActivityInfo.cs" />
+    <Compile Include="Entities\ActivityInfo.cs" />
     <Compile Include="DTO\ActivivtyStatus.cs" />
     <Compile Include="Entities\ScheduledBackup.cs" />
     <Compile Include="Interfaces\IBackupConfig.cs" />

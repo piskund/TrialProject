@@ -8,10 +8,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using Backup.Common.Entities;
-using Backup.DAL.Contexts;
 using Backup.DAL.Interfaces;
+using Backup.DAL.Repositories.EntityFramework;
 
-namespace Backup.DAL.Repositories.EntityFramework
+namespace Backup.DAL.EntityFramework.Repositories
 {
     /// <summary>
     /// Works with backup tasks through EF context.
@@ -23,13 +23,13 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <summary>
         /// The backup context
         /// </summary>
-        private readonly ScheduledBackupContext _backupContext;
+        private readonly BackupContext _backupContext;
 
-        public ScheduledBackupEntityFrameworkRepository() : this(new ScheduledBackupContext())
+        public ScheduledBackupEntityFrameworkRepository() : this(new BackupContext())
         {
         }
 
-        internal ScheduledBackupEntityFrameworkRepository(ScheduledBackupContext backupContext)
+        internal ScheduledBackupEntityFrameworkRepository(BackupContext backupContext)
         {
             _backupContext = backupContext;
         }

@@ -3,8 +3,8 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
-using Backup.Common.Interfaces;
 using Backup.DAL.Interfaces;
+using IEntity = Backup.Common.Interfaces.IEntity;
 
 namespace Backup.DAL.Repositories
 {
