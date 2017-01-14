@@ -2,6 +2,8 @@
 //  ScheduledBackupEntityFrameworkRepositoryTests.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
+using System.Data.Entity;
+using System.Linq;
 using Backup.Common.Entities;
 using Backup.DAL.Contexts;
 using Backup.DAL.Repositories.EntityFramework;
@@ -20,75 +22,35 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
         {
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
-            var contextMock = new Mock<ScheduledBackupContext>();
+            var dbSet = new Mock<DbSet<ScheduledBackup>>();
+            fixture.Register(() => dbSet.Object);
+            var context = fixture.Create<ScheduledBackupContext>();
             var entity = fixture.Freeze<ScheduledBackup>();
-            var sut = new ScheduledBackupEntityFrameworkRepository();
+            var sut = new ScheduledBackupEntityFrameworkRepository(context);
 
             // Act
             sut.Add(entity);
 
             // Assert
-            contextMock.Verify(c => c.Backups.Add(entity), Times.Once);
-        }
-
-        [TestMethod]
-        public void CountTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void CountTest1()
-        {
-            Assert.Fail();
+            dbSet.Verify(d => d.Add(entity), Times.Once);
         }
 
         [TestMethod]
         public void DeleteTest()
         {
-            Assert.Fail();
-        }
+            // Arrange
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var dbSet = new Mock<DbSet<ScheduledBackup>>();
+            fixture.Register(() => dbSet.Object);
+            var context = fixture.Create<ScheduledBackupContext>();
+            var entity = fixture.Freeze<ScheduledBackup>();
+            var sut = new ScheduledBackupEntityFrameworkRepository(context);
 
-        [TestMethod]
-        public void DisposeTest()
-        {
-            Assert.Fail();
-        }
+            // Act
+            sut.Delete(entity);
 
-        [TestMethod]
-        public void GetAllByIpTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void GetAllTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void GetAllTest1()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void GetQueryableTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void GetSingleTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void UpdateTest()
-        {
-            Assert.Fail();
+            // Assert
+            dbSet.Verify(d => d.Remove(entity), Times.Once);
         }
     }
 }
