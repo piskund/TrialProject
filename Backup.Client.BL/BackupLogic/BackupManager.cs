@@ -10,8 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Backup.Client.BL.Interfaces;
 
-namespace Backup.Client.BL
+namespace Backup.Client.BL.BackupLogic
 {
+    /// <summary>
+    /// Manages backup jobs in form of an queue (FIFO).
+    /// </summary>
     public class BackupManager
     {
         /// <summary>
@@ -20,43 +23,22 @@ namespace Backup.Client.BL
         private readonly BlockingCollection<IScheduledBackupJob> _queue = new BlockingCollection<IScheduledBackupJob>();
 
         /// <summary>
-        /// The token source for issuing the cancelation request.
-        /// </summary>
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BackupManager" /> class.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
         internal BackupManager(IEnumerable<IScheduledBackupJob> scheduledJobs)
         {
             QueueProducer(scheduledJobs);
-            //ExecuteJobsAsync(_cancellationTokenSource.Token);
-        }
-
-        /// <summary>
-        /// Executes all jobs from the queue one by one.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        internal void ExecuteJobs(CancellationToken cancellationToken)
-        {
-            while (!_queue.IsCompleted)
-            {
-                var t = ExecuteJob(false, cancellationToken);
-                t.Wait(cancellationToken);
-                if (cancellationToken.IsCancellationRequested)
-                    break;
-            }
         }
 
         /// <summary>
         /// Executes all jobs from the queue one by one asynchronously.
         /// </summary>
-        internal async Task ExecuteJobsAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken, bool isScheduledExecution = true)
         {
             while (!_queue.IsCompleted)
             {
-                await ExecuteJob(true, cancellationToken);
+                await ExecuteJob(cancellationToken, isScheduledExecution);
                 if (cancellationToken.IsCancellationRequested)
                     break;
             }
@@ -65,7 +47,12 @@ namespace Backup.Client.BL
         /// <summary>
         /// Executes top job from the queue.
         /// </summary>
-        private async Task ExecuteJob(bool isScheduledExecution, CancellationToken cancellationToken)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <param name="isScheduledExecution">if set to <c>true</c> (by default) the scheduled time will take into account.
+        /// Otherwise jobs would be executed one by one immediately.
+        /// </param>
+        /// <returns> Awaitable task. </returns>
+        private async Task ExecuteJob(CancellationToken cancellationToken, bool isScheduledExecution)
         {
             if (!_queue.IsCompleted)
             {

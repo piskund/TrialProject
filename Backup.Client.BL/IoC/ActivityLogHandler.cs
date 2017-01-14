@@ -14,15 +14,15 @@ namespace Backup.Client.BL.IoC
         public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
         {
             var result = getNext()(input, getNext);
-            if (input.Arguments.ContainsParameter("backupConfig"))
-            {
-                var config = input.Arguments["backupConfig"] as BackupConfig;
-                if (config != null)
-                {
-                    var activityFacade = ServiceLocator.Current.GetInstance<IActivityFacade>();
-                    activityFacade.Save(new ActivityInfo(config));
-                }
-            }
+            //if (input.Arguments.ContainsParameter("backupConfig"))
+            //{
+            //    var config = input.Arguments["backupConfig"] as BackupConfig;
+            //    if (config != null)
+            //    {
+            //        var activityFacade = ServiceLocator.Current.GetInstance<IActivityFacade>();
+            //        activityFacade.Save(new ActivityInfo(config));
+            //    }
+            //}
             return result;
         }
 

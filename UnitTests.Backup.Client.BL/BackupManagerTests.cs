@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Backup.Client.BL;
 using Backup.Client.BL.BackupLogic;
 using Backup.Client.BL.Interfaces;
 using Backup.Common.Interfaces;
@@ -33,7 +32,8 @@ namespace UnitTests.Backup.Client.BL
             var backupManager = new BackupManager(backupJobs);
 
             // Act
-            backupManager.ExecuteJobs(new CancellationToken());
+            var t = backupManager.StartAsync(new CancellationToken(), false);
+            t.Wait();
 
             // Assert
             foreach (var backupJob in backupJobs)
@@ -55,7 +55,7 @@ namespace UnitTests.Backup.Client.BL
             var backupManager = new BackupManager(backupJobs);
 
             // Act
-            var task = backupManager.ExecuteJobsAsync(new CancellationToken());
+            var task = backupManager.StartAsync(new CancellationToken(), false);
             // Emulate current thread work.
             Thread.Sleep(300);
 
@@ -75,7 +75,8 @@ namespace UnitTests.Backup.Client.BL
             var backupManager = new BackupManager(backupJobs);
 
             // Act
-            backupManager.ExecuteJobs(new CancellationToken());
+            var t = backupManager.StartAsync(new CancellationToken(), false);
+            t.Wait();
 
             // Assert
             Assert.IsTrue(initialDates.OrderBy(d => d).SequenceEqual(resultDates));

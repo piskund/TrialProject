@@ -2,6 +2,7 @@
 //  IScheduledBackupJob.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
+using Backup.Client.BL.IoC;
 using Backup.Common.Interfaces;
 
 namespace Backup.Client.BL.Interfaces
@@ -15,6 +16,7 @@ namespace Backup.Client.BL.Interfaces
         /// <summary>
         /// Performs the required action.
         /// </summary>
+        [ActivityLog]
         void Execute();
     }
 }
