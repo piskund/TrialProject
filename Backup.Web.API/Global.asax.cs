@@ -22,11 +22,11 @@ namespace Backup.Web.API
 
             // Configure DI (Unity)
             var unityContainer = new UnityContainer();
-            unityContainer.LoadConfiguration();
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(unityContainer);
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator),
                 new UnityControllerActivator(unityContainer,
                     GlobalConfiguration.Configuration.Services.GetHttpControllerActivator()));
+            unityContainer.LoadConfiguration();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

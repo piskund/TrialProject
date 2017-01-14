@@ -48,13 +48,21 @@ namespace Backup.Client.BL.BackupLogic
         /// <param name="backupConfig">The backup configuration.</param>
         private void CopyFilesImpersonated(IBackupConfig backupConfig)
         {
-            var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken();
-            using (destinationImpersonationToken)
+            var sourceImpersonationToken = backupConfig.SourceCredential.GetImpersonationToken(isCurrentSystemLogon: true);
+            var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken(isCurrentSystemLogon: false);
+            using (sourceImpersonationToken)
             {
-                // Use the token handle returned by LogonUser.
-                using (WindowsIdentity.Impersonate(destinationImpersonationToken.DangerousGetHandle()))
+                // Use the token handle for the user of the source machine.
+                using (WindowsIdentity.Impersonate(sourceImpersonationToken.DangerousGetHandle()))
                 {
-                    FilesManagementHelper.DirectoryCopy(backupConfig);
+                    using (destinationImpersonationToken)
+                    {
+                        // Use the token handle for the user of the destination machine.
+                        using (WindowsIdentity.Impersonate(destinationImpersonationToken.DangerousGetHandle()))
+                        {
+                            FilesManagementHelper.DirectoryCopy(backupConfig);
+                        }
+                    }
                 }
             }
         }

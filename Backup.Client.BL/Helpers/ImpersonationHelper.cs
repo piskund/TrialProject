@@ -21,6 +21,9 @@ namespace Backup.Client.BL.Helpers
     /// </summary>
     public static class ImpersonationHelper
     {
+        private const int Logon32LogonWithExistingCredentials = 2;
+        private const int Logon32LogonWithNewCredentials = 9;
+
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern bool CloseHandle(IntPtr handle);
 
@@ -30,12 +33,12 @@ namespace Backup.Client.BL.Helpers
         /// <param name="credentialInfo">The credential information.</param>
         /// <returns></returns>
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        public static SafeTokenHandle GetImpersonationToken(this ICredentialInfo credentialInfo)
+        public static SafeTokenHandle GetImpersonationToken(this ICredentialInfo credentialInfo, bool isCurrentSystemLogon)
         {
             Requires.NotNull(credentialInfo, nameof(credentialInfo));
             Requires.NotNullOrEmpty(credentialInfo.UserName, nameof(credentialInfo.UserName));
             Requires.NotNullOrEmpty(credentialInfo.Password, nameof(credentialInfo.Password));
-            return GetImpersonationToken(credentialInfo.UserName, credentialInfo.Password);
+            return GetImpersonationToken(credentialInfo.UserName, credentialInfo.Password, isCurrentSystemLogon);
         }
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
@@ -50,16 +53,18 @@ namespace Backup.Client.BL.Helpers
         /// <returns></returns>
         /// <exception cref="System.ComponentModel.Win32Exception"></exception>
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private static SafeTokenHandle GetImpersonationToken(string userName, string password)
+        private static SafeTokenHandle GetImpersonationToken(string userName, string password, bool isCurrentSystemLogon)
         {
             SafeTokenHandle safeTokenHandle;
             const int logon32ProviderDefault = 0;
-            //This parameter causes LogonUser to create a primary token.
-            const int logon32LogonWithNewCredentials = 9;
+
+            // Destination machine could not have user existing in source system, so we need to use new logon type in this case.
+            int logonType = isCurrentSystemLogon ? Logon32LogonWithExistingCredentials : Logon32LogonWithNewCredentials;
 
             // Call LogonUser to obtain a handle to an access token.
-            var returnValue = LogonUser(userName, Environment.UserDomainName, password,
-                logon32LogonWithNewCredentials, logon32ProviderDefault,
+            var returnValue = LogonUser(
+                userName, Environment.UserDomainName, password,
+                logonType, logon32ProviderDefault,
                 out safeTokenHandle);
 
             if (false == returnValue)

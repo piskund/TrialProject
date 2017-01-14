@@ -56,7 +56,7 @@
     <Compile Include="Logger\LogEntry.cs" />
     <Compile Include="Logger\LoggerExtension.cs" />
     <Compile Include="Logger\LoggingEventType.cs" />
-    <Compile Include="DTO\BackupConfig.cs" />
+    <Compile Include="Entities\BackupConfig.cs" />
     <Compile Include="DTO\CredentialInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace IntegrationTests.Backup.Repositories.EntityFramework
     public class ScheduledBackupEntityFrameworkRepositoryTests
     {
         [TestMethod]
-        [Ignore]
+        //[Ignore]
         public void AddTest()
         {
             // Arrange
@@ -29,6 +29,7 @@ namespace IntegrationTests.Backup.Repositories.EntityFramework
 
             // Assert
             Assert.AreEqual(entity, newEntity);
+            sut.Delete(entity);
         }
     }
 }

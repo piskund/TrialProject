@@ -23,6 +23,7 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
             var dbSet = new Mock<DbSet<ScheduledBackup>>();
+            var backupConfigMock = new Mock<BackupConfig>();
             fixture.Register(() => dbSet.Object);
             var context = fixture.Create<ScheduledBackupContext>();
             var entity = fixture.Freeze<ScheduledBackup>();

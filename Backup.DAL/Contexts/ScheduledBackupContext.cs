@@ -1,10 +1,24 @@
-﻿using System.Data.Entity;
+﻿// -------------------------------------------------------------------------------------------------------------
+//  ScheduledBackupContext.cs created by DEP on 2017/01/14
+// -------------------------------------------------------------------------------------------------------------
+
+using System.Data.Entity;
 using Backup.Common.Entities;
 
 namespace Backup.DAL.Contexts
 {
-    internal class ScheduledBackupContext : DbContext
+    public class ScheduledBackupContext : DbContext
     {
-        public DbSet<ScheduledBackup> Backups { get; set; }
+        public ScheduledBackupContext() : base("BackupConnection")
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the scheduled backups.
+        /// </summary>
+        /// <value>
+        /// The scheduled backups.
+        /// </value>
+        public DbSet<ScheduledBackup> ScheduledBackups { get; set; }
     }
 }

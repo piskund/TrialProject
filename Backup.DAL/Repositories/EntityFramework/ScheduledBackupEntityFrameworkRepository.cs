@@ -40,7 +40,8 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <param name="entity">the entity to add</param>
         public void Add(ScheduledBackup entity)
         {
-            _backupContext.Backups.Add(entity);
+            _backupContext.ScheduledBackups.Add(entity);
+            _backupContext.SaveChanges();
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <returns></returns>
         public long Count(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.Backups.Where(whereCondition).Count();
+            return _backupContext.ScheduledBackups.Where(whereCondition).Count();
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <returns></returns>
         public long Count()
         {
-            return _backupContext.Backups.Count();
+            return _backupContext.ScheduledBackups.Count();
         }
 
         /// <summary>
@@ -68,7 +69,8 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <param name="entity">The entity to delete</param>
         public void Delete(ScheduledBackup entity)
         {
-            _backupContext.Backups.Remove(entity);
+            _backupContext.ScheduledBackups.Remove(entity);
+            _backupContext.SaveChanges();
         }
 
         /// <summary>
@@ -80,7 +82,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// </returns>
         public IEnumerable<ScheduledBackup> GetAll(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.Backups.Where(whereCondition).AsEnumerable();
+            return _backupContext.ScheduledBackups.Where(whereCondition).AsEnumerable();
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <returns></returns>
         public IEnumerable<ScheduledBackup> GetAll()
         {
-            return _backupContext.Backups.AsEnumerable();
+            return _backupContext.ScheduledBackups.AsEnumerable();
         }
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// </returns>
         public IQueryable<ScheduledBackup> GetQueryable()
         {
-            return _backupContext.Backups.AsQueryable();
+            return _backupContext.ScheduledBackups.AsQueryable();
         }
 
         /// <summary>
@@ -110,7 +112,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// <returns></returns>
         public ScheduledBackup GetSingle(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.Backups.Where(whereCondition).Single();
+            return _backupContext.ScheduledBackups.Where(whereCondition).Single();
         }
 
         /// <summary>
@@ -120,6 +122,7 @@ namespace Backup.DAL.Repositories.EntityFramework
         public void Update(ScheduledBackup entity)
         {
             _backupContext.Entry(entity).State = EntityState.Modified;
+            _backupContext.SaveChanges();
         }
 
         /// <summary>

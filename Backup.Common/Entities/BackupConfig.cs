@@ -3,17 +3,40 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
+using Backup.Common.DTO;
 using Backup.Common.Interfaces;
 
-namespace Backup.Common.DTO
+namespace Backup.Common.Entities
 {
     /// <summary>
     /// Provides configuration info necessary to perform backup.
     /// </summary>
     /// <seealso cref="Backup.Common.Interfaces.IBackupConfig" />
     [Serializable]
-    public class BackupConfig : IBackupConfig
+    public class BackupConfig : IEntity, IBackupConfig
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BackupConfig"/> class.
+        /// </summary>
+        public BackupConfig() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BackupConfig"/> class.
+        /// </summary>
+        /// <param name="ipAddress">The ip address.</param>
+        public BackupConfig(string ipAddress)
+        {
+            ClientIpAddress = ipAddress;
+        }
+
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the client ip address.
         /// </summary>

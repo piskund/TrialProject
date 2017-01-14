@@ -1,4 +1,5 @@
 ﻿using System;
+using Backup.Common.Entities;
 using CodeContracts;
 
 namespace Backup.Common.DTO

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using Backup.Client.BL.BackupLogic;
 using Backup.Common.DTO;
+using Backup.Common.Entities;
 using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -16,25 +17,23 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
     public class BackupStrategyCopyFilesTests
     {
         private const int TestFilesNumber = 2;
-        private static readonly string SourcePath = Path.GetFullPath("..\\..\\TestData");
-        private static readonly string DestinationPath = Path.Combine(Path.GetTempPath(), "TestSharedFolder");
+        private static string SourcePath = Path.GetFullPath("..\\..\\TestData");
+        private static string DestinationPath = Path.Combine(Path.GetTempPath(), "TestSharedFolder");
 
         [TestMethod]
         public void DoBackup_SavesTestDataToTempDestination()
         {
-            //var worker = ServiceLocator.Current.GetInstance<IWorker>() as BackupWorker;
-            //worker.BackupConfig.SourceFolderPath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
-            //worker.BackupConfig.DestinationFolderPath = @"\\192.168.0.100\share1";
-            //worker.BackupConfig.DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"};
-            //worker.DoWork();
+            //SourcePath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
+            //DestinationPath = @"\\192.168.0.100\share1";
 
             // Arrange
             var loggerMock = new Mock<ILogger>();
             var backupConfig = new BackupConfig
             {
                 SourceFolderPath = SourcePath,
+                SourceCredential = new CredentialInfo { UserName = "SourceUser", Password = "123456" },
                 DestinationFolderPath = DestinationPath,
-                DestinationCredential = new CredentialInfo {UserName = "StandardUsr", Password = "123456"}
+                DestinationCredential = new CredentialInfo { UserName = "StandardUsr", Password = "123456" }
             };
             var backupStrategy = new BackupStrategyCopyFiles(loggerMock.Object);
 

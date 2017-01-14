@@ -5,13 +5,21 @@ using Backup.Common.Interfaces;
 namespace Backup.Common.Entities
 {
     /// <summary>
-    ///     Holds information about scheduled backup.
+    /// Holds information about scheduled backup.
     /// </summary>
+    /// <seealso cref="Backup.Common.Interfaces.IEntity" />
+    /// <seealso cref="Backup.Common.Interfaces.IScheduledBackup" />
     [Serializable]
     public class ScheduledBackup : IEntity, IScheduledBackup
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ScheduledBackup" /> class.
+        /// Initializes a new instance of the <see cref="ScheduledBackup"/> class.
+        /// </summary>
+        public ScheduledBackup()
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScheduledBackup" /> class.
         /// </summary>
         /// <param name="scheduledDateTime">The scheduled date time.</param>
         /// <param name="backupConfig">The backup configuration.</param>

@@ -21,7 +21,7 @@ namespace Backup.DAL.Repositories
         /// <param name="id">The identifier.</param>
         /// <exception cref="System.ArgumentException">Throws if entity with given id doesn't exist.</exception>
         /// <returns>The entity, if any found.</returns>
-        public static T GetSingleById<T>(this IRepository<T> repository, int id) where T : IEntity
+        public static T GetSingleById<T>(this IRepository<T> repository, int id) where T : class, IEntity
         {
             var entity = repository.GetSingle(e => e.Id == id);
             if (entity == null)
@@ -39,7 +39,7 @@ namespace Backup.DAL.Repositories
         /// <param name="repository">The repository.</param>
         /// <param name="id">The identifier.</param>
         /// <exception cref="System.ArgumentException">Throws if entity with given id doesn't exist.</exception>
-        public static void DeleteById<T>(this IRepository<T> repository, int id) where T : IEntity
+        public static void DeleteById<T>(this IRepository<T> repository, int id) where T : class, IEntity
         {
             var entity = repository.GetSingleById(id);
 

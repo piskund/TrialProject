@@ -17,7 +17,7 @@ namespace Backup.Client.BL
     {
         private const string WebServiceUrl = "http://localhost:59901";
         private const string DefaultUserName = "john.dough@fake.com";
-        private const string DefaultPassword = "John123#&";
+        private const string DefaultPassword = "1q2w3e";
         private static readonly HttpClient HttpClient;
 
         static WebApiRequestsManager()
@@ -26,7 +26,7 @@ namespace Backup.Client.BL
             HttpClient.DefaultRequestHeaders.Accept.Clear();
             HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //var status = RegisterNewUserAsync(DefaultUserName, DefaultPassword).Result;
+            var status = RegisterNewUserAsync(DefaultUserName, DefaultPassword).Result;
 
             var token = GetAccessToken(DefaultUserName, DefaultPassword);
             if (!string.IsNullOrWhiteSpace(token))
