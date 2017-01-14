@@ -2,7 +2,6 @@
 //  IScheduledBackupRepository.cs created by DEP on 2017/01/13
 // -------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Backup.Common.Entities;
 
 namespace Backup.DAL.Interfaces

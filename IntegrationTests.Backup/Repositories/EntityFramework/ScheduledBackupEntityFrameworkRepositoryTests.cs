@@ -5,7 +5,6 @@
 using Backup.Common.Entities;
 using Backup.DAL.EntityFramework.Repositories;
 using Backup.DAL.Repositories;
-using Backup.DAL.Repositories.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;

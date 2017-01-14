@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  ActivityLogHandler.cs created by DEP on 2017/01/12
+//  ActivityLogHandler.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
 using Backup.Client.BL.Interfaces;
@@ -7,7 +7,7 @@ using Backup.Common.Entities;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace Backup.Client.BL.Unity
+namespace Backup.Client.BL.IoC
 {
     public class ActivityLogHandler : ICallHandler
     {

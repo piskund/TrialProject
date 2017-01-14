@@ -502,6 +502,32 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:Backup.Web.API.Controllers.ActivityController">
+            <summary>
+            Allows save/read backup activities.
+            </summary>
+            <seealso cref="T:System.Web.Http.ApiController" />
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ActivityController.Get(System.String)">
+            <summary>
+            Gets the specified ip address.
+            </summary>
+            <param name="ipAddress">The ip address.</param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ActivityController.Post(Backup.Common.Entities.ActivityInfo)">
+            <summary>
+            Posts the specified activity.
+            </summary>
+            <param name="activity">The activity.</param>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ActivityController.Post(System.Collections.Generic.IEnumerable{Backup.Common.Entities.ActivityInfo})">
+            <summary>
+            Posts the specified activities.
+            </summary>
+            <param name="activities">The activities.</param>
+        </member>
         <member name="T:Backup.Web.API.Controllers.BackupController">
             <summary>
             Provides CRUD and enable/disable functionality on backups.

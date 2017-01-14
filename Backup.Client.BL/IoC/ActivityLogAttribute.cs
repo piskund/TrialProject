@@ -6,7 +6,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace Backup.Client.BL.Unity
+namespace Backup.Client.BL.IoC
 {
     [Serializable]
     [AttributeUsage(AttributeTargets.Method)]
