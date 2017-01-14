@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Backup.Common.Entities;
+using Backup.DAL.Interfaces;
+using Backup.DAL.Repositories;
+using CodeContracts;
 
 namespace Backup.Web.API.Controllers
 {
@@ -16,13 +19,25 @@ namespace Backup.Web.API.Controllers
     [Authorize]
     public class BackupController : ApiController
     {
+        private readonly IScheduledBackupRepository _repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BackupController"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        public BackupController(IScheduledBackupRepository repository)
+        {
+            Requires.NotNull(repository, nameof(repository));
+            _repository = repository;
+        }
+
         /// <summary>
         /// Gets the list of all backups.
         /// </summary>
         /// <returns>List of backups</returns>
         public IEnumerable<ScheduledBackup> Get()
         {
-            return new[] { new ScheduledBackup(DateTime.UtcNow, null), new ScheduledBackup(DateTime.UtcNow, null) };
+            return _repository.GetAll();
         }
 
         /// <summary>
@@ -34,7 +49,8 @@ namespace Backup.Web.API.Controllers
         /// </returns>
         public IEnumerable<ScheduledBackup> Get(string ipAddress)
         {
-            return new[] {new ScheduledBackup(DateTime.UtcNow, null), new ScheduledBackup(DateTime.UtcNow, null)};
+            Requires.NotNullOrEmpty(ipAddress, nameof(ipAddress));
+            return _repository.GetAllByIp(ipAddress);
         }
 
         /// <summary>
@@ -44,7 +60,7 @@ namespace Backup.Web.API.Controllers
         /// <returns>The backup</returns>
         public ScheduledBackup Get(int id)
         {
-            return new ScheduledBackup(DateTime.UtcNow, null) {Id = id};
+            return _repository.GetSingleById(id);
         }
 
         /// <summary>
@@ -53,6 +69,8 @@ namespace Backup.Web.API.Controllers
         /// <param name="backup">The backup.</param>
         public void Post([FromBody] ScheduledBackup backup)
         {
+            Requires.NotNull(backup, nameof(backup));
+            _repository.Add(backup);
         }
 
         /// <summary>
@@ -62,6 +80,9 @@ namespace Backup.Web.API.Controllers
         /// <param name="backup">The backup.</param>
         public void Put(int id, [FromBody] ScheduledBackup backup)
         {
+            Requires.NotNull(backup, nameof(backup));
+            Requires.ValidState(id == backup.Id, $"The id : {id} doesn't match to the ScheduledBackup.id : {backup.Id} ");
+            _repository.Update(backup);
         }
 
         /// <summary>
@@ -70,6 +91,7 @@ namespace Backup.Web.API.Controllers
         /// <param name="id">The identifier.</param>
         public void Delete(int id)
         {
+            _repository.DeleteById(id);
         }
     }
 }

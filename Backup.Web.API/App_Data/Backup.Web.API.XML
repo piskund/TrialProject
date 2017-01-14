@@ -508,6 +508,12 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
+        <member name="M:Backup.Web.API.Controllers.BackupController.#ctor(Backup.DAL.Interfaces.IScheduledBackupRepository)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.BackupController"/> class.
+            </summary>
+            <param name="repository">The repository.</param>
+        </member>
         <member name="M:Backup.Web.API.Controllers.BackupController.Get">
             <summary>
             Gets the list of all backups.
@@ -548,6 +554,89 @@
             Deletes the specified backup.
             </summary>
             <param name="id">The identifier.</param>
+        </member>
+        <member name="M:Backup.Web.API.IoC.DependencyResolverParameterBinding.#ctor(System.Web.Http.Controllers.HttpParameterDescriptor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.IoC.DependencyResolverParameterBinding"/> class.
+            </summary>
+            <param name="descriptor">An <see cref="T:System.Web.Http.Controllers.HttpParameterDescriptor" /> that describes the parameters.</param>
+        </member>
+        <member name="M:Backup.Web.API.IoC.DependencyResolverParameterBinding.ExecuteBindingAsync(System.Web.Http.Metadata.ModelMetadataProvider,System.Web.Http.Controllers.HttpActionContext,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously executes the binding for the given request.
+            </summary>
+            <param name="metadataProvider">Metadata provider to use for validation.</param>
+            <param name="actionContext">
+            The action context for the binding. The action context contains the parameter dictionary that will get populated with the parameter.
+            </param>
+            <param name="cancellationToken">Cancellation token for cancelling the binding operation.</param>
+            <returns>
+            A task object representing the asynchronous operation.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.DependencyResolverParameterBindingAttribute.GetBinding(System.Web.Http.Controllers.HttpParameterDescriptor)">
+            <summary>
+            Gets the parameter binding.
+            </summary>
+            <param name="parameter">The parameter description.</param>
+            <returns>
+            The parameter binding.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityControllerActivator.#ctor(Microsoft.Practices.Unity.IUnityContainer,System.Web.Http.Dispatcher.IHttpControllerActivator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.IoC.UnityControllerActivator"/> class.
+            </summary>
+            <param name="unity">The unity.</param>
+            <param name="baseActivator">The base activator.</param>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityControllerActivator.Create(System.Net.Http.HttpRequestMessage,System.Web.Http.Controllers.HttpControllerDescriptor,System.Type)">
+            <summary>
+            Creates an <see cref="T:System.Web.Http.Controllers.IHttpController" /> object.
+            </summary>
+            <param name="request">The message request.</param>
+            <param name="controllerDescriptor">The HTTP controller descriptor.</param>
+            <param name="controllerType">The type of the controller.</param>
+            <returns>
+            An <see cref="T:System.Web.Http.Controllers.IHttpController" /> object.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityDependencyResolver.#ctor(Microsoft.Practices.Unity.IUnityContainer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.IoC.UnityDependencyResolver"/> class.
+            </summary>
+            <param name="unity">The unity.</param>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityDependencyResolver.BeginScope">
+            <summary>
+            Starts a resolution scope.
+            </summary>
+            <returns>
+            The dependency scope.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityDependencyResolver.GetService(System.Type)">
+            <summary>
+            Retrieves a service from the scope.
+            </summary>
+            <param name="serviceType">The service to be retrieved.</param>
+            <returns>
+            The retrieved service.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityDependencyResolver.GetServices(System.Type)">
+            <summary>
+            Retrieves a collection of services from the scope.
+            </summary>
+            <param name="serviceType">The collection of services to be retrieved.</param>
+            <returns>
+            The retrieved collection of services.
+            </returns>
+        </member>
+        <member name="M:Backup.Web.API.IoC.UnityDependencyResolver.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
         </member>
     </members>
 </doc>

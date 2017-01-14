@@ -67,6 +67,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EntityFramework\ScheduledBackupEntityFrameworkRepository.cs" />
+    <Compile Include="Repositories\EntityRepositoryExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">

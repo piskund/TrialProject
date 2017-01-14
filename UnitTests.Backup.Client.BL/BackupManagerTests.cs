@@ -21,7 +21,7 @@ namespace UnitTests.Backup.Client.BL
     public class BackupManagerTests
     {
         [TestMethod]
-        public void BackupManager_CallsOnce_DoWorkOfAllBackupStrategies()
+        public void BackupManager_CallsDoWorkOfAllBackupStrategies()
         {
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());

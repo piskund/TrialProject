@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backup.Web.API", "Backup.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Backup.Web.API", "UnitTests.Backup.Web.API\UnitTests.Backup.Web.API.csproj", "{35689D04-2F49-4A45-A503-5636CFE01DB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests.Backup.DAL", "UnitTests.Backup.DAL\UnitTests.Backup.DAL.csproj", "{17823E72-DFF5-4070-A5F2-28B0F42EB50A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35689D04-2F49-4A45-A503-5636CFE01DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17823E72-DFF5-4070-A5F2-28B0F42EB50A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17823E72-DFF5-4070-A5F2-28B0F42EB50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17823E72-DFF5-4070-A5F2-28B0F42EB50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17823E72-DFF5-4070-A5F2-28B0F42EB50A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

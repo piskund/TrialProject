@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\ICredentialInfo.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IScheduledBackup.cs" />
+    <Compile Include="Logger\FakeLogger.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Logger\LogEntry.cs" />
     <Compile Include="Logger\LoggerExtension.cs" />

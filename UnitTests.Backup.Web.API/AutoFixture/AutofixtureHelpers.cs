@@ -22,7 +22,7 @@ namespace UnitTests.Backup.Web.API.AutoFixture
         /// <typeparam name="T"></typeparam>
         /// <param name="fixture">The fixture.</param>
         /// <returns>An api controller.</returns>
-        public static T GetMockedApiController<T>(Fixture fixture = null) where T : ApiController
+        public static T GetMockedApiController<T>(IFixture fixture = null) where T : ApiController
         {
             if (fixture == null)
             {

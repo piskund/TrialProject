@@ -14,7 +14,5 @@ namespace Backup.DAL.Interfaces
     public interface IScheduledBackupRepository : IRepository<ScheduledBackup>
     {
         IEnumerable<ScheduledBackup> GetAllByIp(string ipAddress);
-
-        ScheduledBackup GetSingleById(int id);
     }
 }

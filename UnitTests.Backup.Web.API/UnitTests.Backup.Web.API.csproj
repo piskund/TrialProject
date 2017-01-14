@@ -108,7 +108,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoFixture\AutofixtureHelpers.cs" />
-    <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Controllers\BackupControllerTests.cs" />
     <Compile Include="AutoFixture\HttpRequestContextWithoutClientCertificateCustomization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +122,10 @@
     <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">
       <Project>{2AEEE152-1092-4176-A305-E1AE0FA27E9F}</Project>
       <Name>Backup.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Backup.DAL\Backup.DAL.csproj">
+      <Project>{c44012e3-2855-4a35-856c-1ef1779eff58}</Project>
+      <Name>Backup.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Backup.Web.API\Backup.Web.API.csproj">
       <Project>{C54DAFE5-BDDE-48AA-81B8-3FAD8773C677}</Project>
