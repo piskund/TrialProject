@@ -1,12 +1,17 @@
 ﻿using System.Linq;
+using Backup.Common.Entities;
 using Backup.REST.Web.API.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoMoq;
 
 namespace UnitTests.Backup.REST.Web.API.Controllers
 {
     [TestClass]
     public class BackupControllerTests
     {
+        private const string LocalHost = "127.0.0.1";
+
         [TestMethod]
         public void Get()
         {
@@ -14,26 +19,13 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
             var controller = new BackupController();
 
             // Act
-            var result = controller.Get();
+            var result = controller.Get(LocalHost);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("value1", result.ElementAt(0));
-            Assert.AreEqual("value2", result.ElementAt(1));
-        }
-
-        [TestMethod]
-        public void GetById()
-        {
-            // Arrange
-            var controller = new BackupController();
-
-            // Act
-            var result = controller.Get(5);
-
-            // Assert
-            Assert.AreEqual("value", result);
+            Assert.IsInstanceOfType(result.ElementAt(0), typeof(ScheduledBackup));
+            Assert.IsInstanceOfType(result.ElementAt(0), typeof(ScheduledBackup));
         }
 
         [TestMethod]
@@ -41,9 +33,11 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         {
             // Arrange
             var controller = new BackupController();
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var backup = fixture.Freeze<ScheduledBackup>();
 
             // Act
-            controller.Post("value");
+            controller.Post(backup);
 
             // Assert
         }
@@ -53,9 +47,11 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         {
             // Arrange
             var controller = new BackupController();
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var backup = fixture.Freeze<ScheduledBackup>();
 
             // Act
-            controller.Put(5, "value");
+            controller.Put(backup.Id, backup);
 
             // Assert
         }
@@ -65,9 +61,11 @@ namespace UnitTests.Backup.REST.Web.API.Controllers
         {
             // Arrange
             var controller = new BackupController();
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var id = fixture.Freeze<int>();
 
             // Act
-            controller.Delete(5);
+            controller.Delete(id);
 
             // Assert
         }
