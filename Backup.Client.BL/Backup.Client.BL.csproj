@@ -85,6 +85,7 @@
     <Compile Include="Helpers\ImpersonationHelper.cs" />
     <Compile Include="Interfaces\IActivityFacade.cs" />
     <Compile Include="Interfaces\IActivityTracker.cs" />
+    <Compile Include="Interfaces\IBackupFacade.cs" />
     <Compile Include="Interfaces\IBackupStrategy.cs" />
     <Compile Include="Interfaces\IScheduledBackupJob.cs" />
     <Compile Include="Interfaces\IScheduledJob.cs" />

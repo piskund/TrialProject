@@ -8,7 +8,7 @@ using Backup.Common.Logger;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity.InterceptionExtension;
 
-namespace Backup.Client.BL.Unity
+namespace Backup.Client.BL.IoC
 {
     /// <summary>
     /// Logs exception. Other exception handling could be performed here as well.
