@@ -1,15 +1,15 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  IScheduledBackup.cs created by DEP on 2017/01/14
+//  IScheduledJob.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
 
-namespace Backup.Common.Interfaces
+namespace Backup.Client.BL.Interfaces
 {
     /// <summary>
-    /// Defines scheduled backup.
+    /// Defines executable job.
     /// </summary>
-    public interface IScheduledBackup
+    public interface IScheduledJob
     {
         /// <summary>
         /// Gets the scheduled date time.
@@ -20,11 +20,8 @@ namespace Backup.Common.Interfaces
         DateTime ScheduledDateTime { get; }
 
         /// <summary>
-        /// Gets the backup configuration.
+        /// Executes this job.
         /// </summary>
-        /// <value>
-        /// The backup configuration.
-        /// </value>
-        IBackupConfig BackupConfig { get; }
+        void Execute();
     }
 }

@@ -1,10 +1,11 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  ScheduledBackupJob.cs created by DEP on 2017/01/12
+//  ScheduledBackupJob.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
 using Backup.Client.BL.Interfaces;
-using Backup.Common.Interfaces;
+using Backup.Common.DTO;
+using Backup.Common.Entities;
 using CodeContracts;
 
 namespace Backup.Client.BL.BackupLogic
@@ -15,20 +16,42 @@ namespace Backup.Client.BL.BackupLogic
     /// <seealso cref="Backup.Client.BL.Interfaces.IScheduledBackupJob" />
     internal class ScheduledBackupJob : IScheduledBackupJob
     {
-        private readonly IScheduledBackup _scheduledBackup;
         private readonly IBackupStrategy _backupStrategy;
+        private readonly ScheduledBackup _scheduledBackup;
+        private ActivityStatusType _activityStatus;
+
+        /// <summary>
+        /// Occurs when [activity status changed].
+        /// </summary>
+        public event EventHandler<ActivityChangedEventArgs> ActivityStatusChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduledBackupJob" /> class.
         /// </summary>
         /// <param name="scheduledBackup">The scheduled backup.</param>
         /// <param name="backupStrategy">The backup strategy.</param>
-        public ScheduledBackupJob(IScheduledBackup scheduledBackup, IBackupStrategy backupStrategy)
+        public ScheduledBackupJob(ScheduledBackup scheduledBackup, IBackupStrategy backupStrategy)
         {
             Requires.NotNull(scheduledBackup, nameof(scheduledBackup));
             Requires.NotNull(backupStrategy, nameof(backupStrategy));
             _scheduledBackup = scheduledBackup;
             _backupStrategy = backupStrategy;
+        }
+
+        /// <summary>
+        /// Gets the activity status.
+        /// </summary>
+        /// <value>
+        /// The activity status.
+        /// </value>
+        public ActivityStatusType ActivityStatus
+        {
+            get { return _activityStatus; }
+            private set
+            {
+                _activityStatus = value;
+                ActivityStatusChanged?.Invoke(this, new ActivityChangedEventArgs(_scheduledBackup, _activityStatus));
+            }
         }
 
         /// <summary>
@@ -45,14 +68,24 @@ namespace Backup.Client.BL.BackupLogic
         /// <value>
         /// The backup configuration.
         /// </value>
-        public IBackupConfig BackupConfig => _scheduledBackup.BackupConfig;
+        public BackupConfig BackupConfig => _scheduledBackup.BackupConfig;
 
         /// <summary>
         /// Performs the required action.
         /// </summary>
         public void Execute()
         {
-            _backupStrategy.DoWork(BackupConfig);
+            ActivityStatus = ActivityStatusType.InProgress;
+            try
+            {
+                _backupStrategy.DoWork(BackupConfig);
+                ActivityStatus = ActivityStatusType.Succeeded;
+            }
+            catch (Exception)
+            {
+                ActivityStatus = ActivityStatusType.Failed;
+                throw;
+            }
         }
     }
 }

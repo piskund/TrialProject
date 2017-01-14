@@ -15,18 +15,18 @@ namespace Backup.Client.BL.BackupLogic
     /// <summary>
     /// Manages backup jobs in form of an queue (FIFO).
     /// </summary>
-    public class BackupManager
+    public class ScheduledJobManager
     {
         /// <summary>
         /// The task's queue
         /// </summary>
-        private readonly BlockingCollection<IScheduledBackupJob> _queue = new BlockingCollection<IScheduledBackupJob>();
+        private readonly BlockingCollection<IScheduledJob> _queue = new BlockingCollection<IScheduledJob>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BackupManager" /> class.
+        /// Initializes a new instance of the <see cref="ScheduledJobManager" /> class.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
-        internal BackupManager(IEnumerable<IScheduledBackupJob> scheduledJobs)
+        internal ScheduledJobManager(IEnumerable<IScheduledJob> scheduledJobs)
         {
             QueueProducer(scheduledJobs);
         }
@@ -82,7 +82,7 @@ namespace Backup.Client.BL.BackupLogic
         /// Builds the queue.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
-        private void QueueProducer(IEnumerable<IScheduledBackupJob> scheduledJobs)
+        private void QueueProducer(IEnumerable<IScheduledJob> scheduledJobs)
         {
             var sortedJobs = scheduledJobs.OrderBy(j => j.ScheduledDateTime);
             foreach (var job in sortedJobs)

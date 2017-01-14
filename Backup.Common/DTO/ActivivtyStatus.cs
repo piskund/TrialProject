@@ -1,22 +1,27 @@
 ﻿namespace Backup.Common.DTO
 {
     /// <summary>
-    ///     Represents result of backup activity.
+    /// Represents result of backup activity.
     /// </summary>
     public enum ActivityStatusType
     {
         /// <summary>
-        ///     Backup not started
+        /// Backup not started
         /// </summary>
         NotStarted,
 
         /// <summary>
-        ///     Backup performed
+        /// The in progress
+        /// </summary>
+        InProgress,
+
+        /// <summary>
+        /// Backup performed
         /// </summary>
         Succeeded,
 
         /// <summary>
-        ///     Backup failed
+        /// Backup failed
         /// </summary>
         Failed
     }

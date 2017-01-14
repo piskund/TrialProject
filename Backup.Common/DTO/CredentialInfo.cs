@@ -6,9 +6,8 @@ namespace Backup.Common.DTO
     /// <summary>
     /// Credential info.
     /// </summary>
-    /// <seealso cref="Backup.Common.Interfaces.ICredentialInfo" />
     [Serializable]
-    public class CredentialInfo : ICredentialInfo
+    public class CredentialInfo 
     {
         /// <summary>
         /// Gets or sets the name of the user.

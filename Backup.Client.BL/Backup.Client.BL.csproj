@@ -76,18 +76,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupLogic\ActivityChangedEventArgs.cs" />
     <Compile Include="BackupLogic\ScheduledBackupJob.cs" />
     <Compile Include="Facades\ActivityFacade.cs" />
-    <Compile Include="BackupLogic\BackupManager.cs" />
+    <Compile Include="BackupLogic\ScheduledJobManager.cs" />
     <Compile Include="BackupLogic\BackupStrategyCopyFiles.cs" />
     <Compile Include="Helpers\FilesManagementHelper.cs" />
     <Compile Include="Helpers\ImpersonationHelper.cs" />
     <Compile Include="Interfaces\IActivityFacade.cs" />
+    <Compile Include="Interfaces\IActivityTracker.cs" />
     <Compile Include="Interfaces\IBackupStrategy.cs" />
     <Compile Include="Interfaces\IScheduledBackupJob.cs" />
+    <Compile Include="Interfaces\IScheduledJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IoC\ActivityLogAttribute.cs" />
-    <Compile Include="IoC\ActivityLogHandler.cs" />
     <Compile Include="IoC\ExceptionInterceptionBehavior.cs" />
     <Compile Include="WebApiRequestsManager.cs" />
   </ItemGroup>

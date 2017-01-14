@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using Backup.Client.BL.BackupLogic;
 using Backup.Client.BL.Interfaces;
-using Backup.Common.Interfaces;
+using Backup.Common.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ploeh.AutoFixture;
@@ -26,10 +26,10 @@ namespace UnitTests.Backup.Client.BL
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
 
             var backupStrategyMock = new Mock<IBackupStrategy>();
-            backupStrategyMock.Setup(worker => worker.DoWork(It.IsAny<IBackupConfig>()));
+            backupStrategyMock.Setup(strategy => strategy.DoWork(It.IsAny<BackupConfig>()));
             fixture.Register(() => backupStrategyMock.Object);
             var backupJobs = fixture.CreateMany<ScheduledBackupJob>();
-            var backupManager = new BackupManager(backupJobs);
+            var backupManager = new ScheduledJobManager(backupJobs);
 
             // Act
             var t = backupManager.StartAsync(new CancellationToken(), false);
@@ -46,13 +46,13 @@ namespace UnitTests.Backup.Client.BL
         public void BackupManager_ExecutesScheduledJobsByDateTime()
         {
             // Arrange
-            var backupJobs = new List<IScheduledBackupJob>();
+            var backupJobs = new List<IScheduledJob>();
 
             for (var i = 0; i < 3; i++)
             {
                 backupJobs.Add(new DelayedJob());
             }
-            var backupManager = new BackupManager(backupJobs);
+            var backupManager = new ScheduledJobManager(backupJobs);
 
             // Act
             var task = backupManager.StartAsync(new CancellationToken(), false);
@@ -69,10 +69,10 @@ namespace UnitTests.Backup.Client.BL
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
             var resultDates = new List<DateTime>();
-            fixture.Register<IScheduledBackupJob>(() => new DateStoringJob(resultDates, fixture.Create<DateTime>()));
-            var backupJobs = fixture.CreateMany<IScheduledBackupJob>();
+            fixture.Register<IScheduledJob>(() => new DateStoringJob(resultDates, fixture.Create<DateTime>()));
+            var backupJobs = fixture.CreateMany<IScheduledJob>();
             var initialDates = backupJobs.Select(j => j.ScheduledDateTime).ToList();
-            var backupManager = new BackupManager(backupJobs);
+            var backupManager = new ScheduledJobManager(backupJobs);
 
             // Act
             var t = backupManager.StartAsync(new CancellationToken(), false);
@@ -82,7 +82,7 @@ namespace UnitTests.Backup.Client.BL
             Assert.IsTrue(initialDates.OrderBy(d => d).SequenceEqual(resultDates));
         }
 
-        private class DateStoringJob : IScheduledBackupJob
+        private class DateStoringJob : IScheduledJob
         {
             private readonly List<DateTime> _resultDates;
 
@@ -98,11 +98,9 @@ namespace UnitTests.Backup.Client.BL
             }
 
             public DateTime ScheduledDateTime { get; }
-
-            public IBackupConfig BackupConfig { get; }
         }
 
-        private class DelayedJob : IScheduledBackupJob
+        private class DelayedJob : IScheduledJob
         {
             private static int _delay = 50;
 
@@ -120,8 +118,6 @@ namespace UnitTests.Backup.Client.BL
             }
 
             public DateTime ScheduledDateTime { get; }
-
-            public IBackupConfig BackupConfig { get; }
         }
     }
 }

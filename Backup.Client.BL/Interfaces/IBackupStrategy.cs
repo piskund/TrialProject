@@ -2,7 +2,7 @@
 //  IBackupWorker.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
-using Backup.Common.Interfaces;
+using Backup.Common.Entities;
 
 namespace Backup.Client.BL.Interfaces
 {
@@ -15,6 +15,6 @@ namespace Backup.Client.BL.Interfaces
         ///     Performs the required work.
         /// </summary>
         /// <param name="config">The configuration.</param>
-        void DoWork(IBackupConfig config);
+        void DoWork(BackupConfig config);
     }
 }
