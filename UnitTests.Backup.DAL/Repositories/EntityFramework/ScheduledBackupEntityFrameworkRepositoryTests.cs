@@ -27,7 +27,7 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
             var mockContext = new Mock<BackupContext>();
             mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
 
-            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
+            var sut = new ScheduledBackupRepository(mockContext.Object);
             sut.Add(entity);
 
             mockSet.Verify(m => m.Add(entity), Times.Once());
@@ -45,7 +45,7 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
             var mockContext = new Mock<BackupContext>();
             mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
 
-            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
+            var sut = new ScheduledBackupRepository(mockContext.Object);
             sut.Delete(entity);
 
             mockSet.Verify(m => m.Remove(entity), Times.Once());

@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Entities\ActivityInfo.cs" />
     <Compile Include="DTO\ActivivtyStatus.cs" />
+    <Compile Include="Entities\ClientInfo.cs" />
     <Compile Include="Entities\ScheduledBackup.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Logger\FakeLogger.cs" />

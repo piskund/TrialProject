@@ -16,23 +16,24 @@ namespace Backup.DAL.EntityFramework.Repositories
     /// <summary>
     /// Works with backup tasks through EF context.
     /// </summary>
+    /// <seealso cref="Backup.DAL.EntityFramework.Repositories.BaseEntityFrameworkRepository" />
     /// <seealso cref="Backup.DAL.Interfaces.IScheduledBackupRepository" />
     /// <seealso cref="System.IDisposable" />
-    public class ScheduledBackupEntityFrameworkRepository : IScheduledBackupRepository, IDisposable
+    public class ScheduledBackupRepository : BaseEntityFrameworkRepository, IScheduledBackupRepository
     {
         /// <summary>
-        /// The backup context
+        /// Initializes a new instance of the <see cref="ScheduledBackupRepository"/> class.
         /// </summary>
-        private readonly BackupContext _backupContext;
-
-        public ScheduledBackupEntityFrameworkRepository() : this(new BackupContext())
+        public ScheduledBackupRepository()
         {
         }
 
-        internal ScheduledBackupEntityFrameworkRepository(BackupContext backupContext)
-        {
-            _backupContext = backupContext;
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScheduledBackupRepository"/> class.
+        /// </summary>
+        /// <param name="backupContext">The backup context.</param>
+        internal ScheduledBackupRepository(BackupContext backupContext) : base(backupContext)
+        { }
 
         /// <summary>
         /// Add entity to the repository
@@ -40,8 +41,8 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <param name="entity">the entity to add</param>
         public void Add(ScheduledBackup entity)
         {
-            _backupContext.ScheduledBackups.Add(entity);
-            _backupContext.SaveChanges();
+            BackupContext.ScheduledBackups.Add(entity);
+            BackupContext.SaveChanges();
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public long Count(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.ScheduledBackups.Where(whereCondition).Count();
+            return BackupContext.ScheduledBackups.Where(whereCondition).Count();
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public long Count()
         {
-            return _backupContext.ScheduledBackups.Count();
+            return BackupContext.ScheduledBackups.Count();
         }
 
         /// <summary>
@@ -69,8 +70,8 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <param name="entity">The entity to delete</param>
         public void Delete(ScheduledBackup entity)
         {
-            _backupContext.ScheduledBackups.Remove(entity);
-            _backupContext.SaveChanges();
+            BackupContext.ScheduledBackups.Remove(entity);
+            BackupContext.SaveChanges();
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// </returns>
         public IEnumerable<ScheduledBackup> GetAll(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.ScheduledBackups.Where(whereCondition).AsEnumerable();
+            return BackupContext.ScheduledBackups.Where(whereCondition).AsEnumerable();
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public IEnumerable<ScheduledBackup> GetAll()
         {
-            return _backupContext.ScheduledBackups.AsEnumerable();
+            return BackupContext.ScheduledBackups.AsEnumerable();
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// </returns>
         public IQueryable<ScheduledBackup> GetQueryable()
         {
-            return _backupContext.ScheduledBackups.AsQueryable();
+            return BackupContext.ScheduledBackups.AsQueryable();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public ScheduledBackup GetSingle(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return _backupContext.ScheduledBackups.Where(whereCondition).Single();
+            return BackupContext.ScheduledBackups.Where(whereCondition).Single();
         }
 
         /// <summary>
@@ -121,8 +122,8 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <param name="entity">the entity to update</param>
         public void Update(ScheduledBackup entity)
         {
-            _backupContext.Entry(entity).State = EntityState.Modified;
-            _backupContext.SaveChanges();
+            BackupContext.Entry(entity).State = EntityState.Modified;
+            BackupContext.SaveChanges();
         }
 
         /// <summary>
@@ -134,31 +135,5 @@ namespace Backup.DAL.EntityFramework.Repositories
         {
             return GetAll(backup => backup.BackupConfig.ClientIpAddress == ipAddress);
         }
-
-        #region IDisposable Support
-
-        private bool _disposedValue; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    _backupContext.Dispose();
-                }
-
-                _disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
-
-        #endregion
     }
 }
