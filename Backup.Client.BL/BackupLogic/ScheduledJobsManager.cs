@@ -34,7 +34,7 @@ namespace Backup.Client.BL.BackupLogic
         /// </summary>
         private readonly ILogger _logger;
 
-        internal ScheduledJobsManager(ILogger logger)
+        public ScheduledJobsManager(ILogger logger)
         {
             _logger = logger;
         }
@@ -43,10 +43,7 @@ namespace Backup.Client.BL.BackupLogic
         /// Proceeds the scheduled jobs asynchronous.
         /// </summary>
         /// <param name="scheduledJobs">The scheduled jobs.</param>
-        /// <param name="isScheduledExecution">if set to <c>true</c> scheduled time takes into account.</param>
-        /// <returns></returns>
-        internal async Task ProceedScheduledJobsAsync(IEnumerable<IScheduledJob> scheduledJobs,
-            bool isScheduledExecution = true)
+        internal async Task ProceedScheduledJobsAsync(IEnumerable<IScheduledJob> scheduledJobs)
         {
             if (_queue.Count > 0 && !_queue.IsCompleted)
             {
@@ -67,12 +64,12 @@ namespace Backup.Client.BL.BackupLogic
         /// <summary>
         /// Executes all jobs from the queue one by one asynchronously.
         /// </summary>
-        private async Task ProceedQueueAsync(CancellationToken cancellationToken, bool isScheduledExecution = true)
+        private async Task ProceedQueueAsync(CancellationToken cancellationToken)
         {
             _logger.LogInfo($"The queue is starting to proceed on {DateTime.UtcNow}");
             while (!_queue.IsCompleted)
             {
-                await ExecuteJob(cancellationToken, isScheduledExecution);
+                await ExecuteJob(cancellationToken);
                 if (cancellationToken.IsCancellationRequested)
                 {
                     _logger.LogInfo($"The queue proceedin has been canceled on {DateTime.UtcNow}");
@@ -86,26 +83,20 @@ namespace Backup.Client.BL.BackupLogic
         /// Executes top job from the queue.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <param name="isScheduledExecution">if set to <c>true</c> (by default) the scheduled time takes into account.
-        /// Otherwise jobs would be executed one by one immediately.
-        /// </param>
         /// <returns> Awaitable task. </returns>
-        private async Task ExecuteJob(CancellationToken cancellationToken, bool isScheduledExecution)
+        private async Task ExecuteJob(CancellationToken cancellationToken)
         {
             if (!_queue.IsCompleted)
             {
                 var job = _queue.Take();
                 // Start job immediately if delay is not required.
                 var delay = TimeSpan.FromSeconds(0);
-
-                if (isScheduledExecution)
+                var startTime = job.ScheduledDateTime;
+                if (startTime > DateTime.UtcNow)
                 {
-                    var startTime = job.ScheduledDateTime;
-                    if (startTime > DateTime.UtcNow)
-                    {
-                        delay = startTime - DateTime.UtcNow;
-                    }
+                    delay = startTime - DateTime.UtcNow;
                 }
+
                 _logger.LogInfo($"Executing the job scheduled on {job.ScheduledDateTime}. Delay to start: {delay}");
                 var t = Task.Run(async delegate
                 {

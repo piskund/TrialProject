@@ -4,9 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Backup.Client.BL.BackupLogic;
+using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
 using Backup.Common.Entities;
+using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ploeh.AutoFixture;
@@ -26,11 +29,13 @@ namespace UnitTests.Backup.Client.BL
             var backupStrategyMock = new Mock<IBackupStrategy>();
             backupStrategyMock.Setup(strategy => strategy.DoWork(It.IsAny<BackupConfig>()));
             fixture.Register(() => backupStrategyMock.Object);
+            fixture.Register(() => DateTime.UtcNow);
+            fixture.Register<ILogger>(() => new ConsoleLogger());
             var backupJobs = fixture.CreateMany<ScheduledBackupJob>();
             var backupManager = fixture.Create<ScheduledJobsManager>();
 
             // Act
-            var t = backupManager.ProceedScheduledJobsAsync(backupJobs, false);
+            var t = backupManager.ProceedScheduledJobsAsync(backupJobs);
             t.Wait();
 
             // Assert
@@ -40,79 +45,47 @@ namespace UnitTests.Backup.Client.BL
             }
         }
 
-        //[TestMethod]
-        //public void BackupManager_ExecutesScheduledJobsByDateTime()
-        //{
-        //    // Arrange
-        //    var backupJobs = new List<IScheduledJob>();
+        [TestMethod]
+        public void BackupManager_SortsScheduledJobsByDateTime()
+        {
+            // Arrange
+            var fixture = new Fixture().Customize(new AutoMoqCustomization());
+            var resultDates = new List<DateTime>();
+            fixture.Register<ILogger>(() => new ConsoleLogger());
+            var logger = fixture.Create<ILogger>();
+            fixture.Register<IScheduledJob>(() => new DateStoringJob(logger, resultDates));
+            var backupJobs = fixture.CreateMany<IScheduledJob>();
+            var initialDates = backupJobs.Select(j => j.ScheduledDateTime).ToList();
 
-        //    for (var i = 0; i < 3; i++)
-        //    {
-        //        backupJobs.Add(new DelayedJob());
-        //    }
-        //    var backupManager = new ScheduledJobsManager(backupJobs);
+            var backupManager = fixture.Create<ScheduledJobsManager>();
 
-        //    // Act
-        //    var task = backupManager.ProceedQueueAsync(new CancellationToken(), false);
-        //    // Emulate current thread work.
-        //    Thread.Sleep(300);
+            // Act
+            var t = backupManager.ProceedScheduledJobsAsync(backupJobs);
+            t.Wait();
 
-        //    // Assert
-        //    Assert.IsTrue(task.IsCompleted);
-        //}
-
-        //[TestMethod]
-        //public void BackupManager_SortsScheduledJobsByDateTime()
-        //{
-        //    // Arrange
-        //    var fixture = new Fixture().Customize(new AutoMoqCustomization());
-        //    var resultDates = new List<DateTime>();
-        //    fixture.Register<IScheduledJob>(() => new DateStoringJob(resultDates, fixture.Create<DateTime>()));
-        //    var backupJobs = fixture.CreateMany<IScheduledJob>();
-        //    var initialDates = backupJobs.Select(j => j.ScheduledDateTime).ToList();
-        //    var backupManager = new ScheduledJobsManager(backupJobs);
-
-        //    // Act
-        //    var t = backupManager.ProceedQueueAsync(new CancellationToken(), false);
-        //    t.Wait();
-
-        //    // Assert
-        //    Assert.IsTrue(initialDates.OrderBy(d => d).SequenceEqual(resultDates));
-        //}
+            // Assert
+            Assert.IsTrue(initialDates.OrderBy(d => d).SequenceEqual(resultDates));
+        }
 
         private class DateStoringJob : IScheduledJob
         {
+            private static int _delay = 50;
+            private readonly ILogger _logger;
             private readonly List<DateTime> _resultDates;
 
-            public DateStoringJob(List<DateTime> resultDates, DateTime scheduledDateTime)
+            public DateStoringJob(ILogger logger, List<DateTime> resultDates)
             {
-                _resultDates = resultDates;
-                ScheduledDateTime = scheduledDateTime;
-            }
-
-            public void Execute()
-            {
-                _resultDates.Add(ScheduledDateTime);
-            }
-
-            public DateTime ScheduledDateTime { get; }
-        }
-
-        private class DelayedJob : IScheduledJob
-        {
-            private static int _delay = 50;
-
-            public DelayedJob()
-            {
+                _logger = logger;
                 ScheduledDateTime = DateTime.UtcNow.AddMilliseconds(_delay);
                 _delay += 100;
+                _resultDates = resultDates;
             }
 
             public void Execute()
             {
-                Console.WriteLine($"Scheduled at {ScheduledDateTime.Second}:{ScheduledDateTime.Millisecond}");
-                Console.WriteLine($"Executed at {DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond}");
-                Console.WriteLine();
+                _logger.LogInfo($"Scheduled at {ScheduledDateTime.Second}:{ScheduledDateTime.Millisecond}");
+                _logger.LogInfo($"Executed at {DateTime.UtcNow.Second}:{DateTime.UtcNow.Millisecond} \n");
+                _resultDates.Add(ScheduledDateTime);
             }
 
             public DateTime ScheduledDateTime { get; }
