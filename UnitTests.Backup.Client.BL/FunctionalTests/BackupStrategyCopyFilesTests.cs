@@ -1,11 +1,11 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  BackupStrategyCopyFilesTests.cs created by DEP on 2017/01/12
+//  BackupStrategyCopyFilesTests.cs created by DEP on 2017/01/16
 // -------------------------------------------------------------------------------------------------------------
 
 using System.IO;
 using System.Linq;
 using Backup.Client.BL.BackupLogic;
-using Backup.Common.DTO;
+using Backup.Client.BL.Helpers;
 using Backup.Common.Entities;
 using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,37 +14,36 @@ using Moq;
 namespace UnitTests.Backup.Client.BL.FunctionalTests
 {
     [TestClass]
+    [Ignore]
+    // Please make sure you have shared  shareFolder for ShareUser with password 1q2w3e before enable this test.
     public class BackupStrategyCopyFilesTests
     {
         private const int TestFilesNumber = 2;
-        private static string SourcePath = Path.GetFullPath("..\\..\\TestData");
-        private static string DestinationPath = Path.Combine(Path.GetTempPath(), "TestSharedFolder");
+        private static readonly string DestinationPath = Path.Combine(Path.GetTempPath(), "TestSharedFolder");
 
         [TestMethod]
         public void DoBackup_SavesTestDataToTempDestination()
         {
-            //SourcePath = @"D:\TrialProject\UnitTests.Backup.Client.BL\TestData";
-            //DestinationPath = @"\\192.168.0.100\share1";
-
             // Arrange
-            var loggerMock = new Mock<ILogger>();
+            var crh = new ClientRegistrationHelper("ShareUser", "1q2w3e", "sharedFolder");
+            var logger = new ConsoleLogger();
             var backupConfig = new BackupConfig
             {
-                SourceFolderPath = SourcePath,
-                SourceCredential = new CredentialInfo { UserName = "SourceUser", Password = "123456" },
+                SourceFolderPath = crh.ClientInfo.SharedFolderPath,
+                SourceCredential = crh.ClientInfo.CredentialInfo,
                 DestinationFolderPath = DestinationPath,
-                DestinationCredential = new CredentialInfo { UserName = "StandardUsr", Password = "123456" }
+                DestinationCredential = crh.ClientInfo.CredentialInfo
             };
-            var backupStrategy = new BackupStrategyCopyFiles(loggerMock.Object);
+            var backupStrategy = new BackupStrategyCopyFiles(logger);
 
             // Act
             backupStrategy.DoWork(backupConfig);
 
             // Assert
-            var filesInSource = Directory.EnumerateFiles(SourcePath);
+            var filesInSource = Directory.EnumerateFiles(backupConfig.SourceFolderPath);
             Assert.IsNotNull(filesInSource);
             Assert.AreEqual(TestFilesNumber, filesInSource.Count());
-            var filesInDestination = Directory.EnumerateFiles(DestinationPath);
+            var filesInDestination = Directory.EnumerateFiles(backupConfig.DestinationFolderPath);
             Assert.IsNotNull(filesInDestination);
             Assert.AreEqual(TestFilesNumber, filesInDestination.Count());
             foreach (var fileName in filesInSource.Select(Path.GetFileName))

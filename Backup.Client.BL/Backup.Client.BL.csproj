@@ -83,6 +83,7 @@
     <Compile Include="BackupLogic\ScheduledJobsManager.cs" />
     <Compile Include="BackupLogic\BackupStrategyCopyFiles.cs" />
     <Compile Include="Facades\BackupFacade.cs" />
+    <Compile Include="Helpers\ClientRegistrationHelper.cs" />
     <Compile Include="Helpers\ConsoleLogger.cs" />
     <Compile Include="Helpers\FilesManagementHelper.cs" />
     <Compile Include="Helpers\ImpersonationHelper.cs" />

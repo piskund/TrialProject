@@ -19,6 +19,6 @@ namespace Backup.Common.Entities
 
         public CredentialInfo CredentialInfo { get; set; }
 
-        public string ShareFolderPath { get; set; }
+        public string SharedFolderPath { get; set; }
     }
 }
