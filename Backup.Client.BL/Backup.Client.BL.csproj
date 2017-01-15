@@ -77,14 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupLogic\ActivityChangedEventArgs.cs" />
+    <Compile Include="BackupLogic\BackupController.cs" />
     <Compile Include="BackupLogic\ScheduledBackupJob.cs" />
     <Compile Include="Facades\ActivityFacade.cs" />
     <Compile Include="BackupLogic\ScheduledJobManager.cs" />
     <Compile Include="BackupLogic\BackupStrategyCopyFiles.cs" />
+    <Compile Include="Facades\BackupFacade.cs" />
     <Compile Include="Helpers\FilesManagementHelper.cs" />
     <Compile Include="Helpers\ImpersonationHelper.cs" />
     <Compile Include="Interfaces\IActivityFacade.cs" />
     <Compile Include="Interfaces\IActivityTracker.cs" />
+    <Compile Include="Interfaces\IBackupController.cs" />
     <Compile Include="Interfaces\IBackupFacade.cs" />
     <Compile Include="Interfaces\IBackupStrategy.cs" />
     <Compile Include="Interfaces\IScheduledBackupJob.cs" />

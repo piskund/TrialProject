@@ -1,14 +1,18 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  IBackupFacade.cs created by DEP on 2017/01/14
+//  BackupFacade.cs created by DEP on 2017/01/15
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using Backup.Client.BL.Interfaces;
 using Backup.Common.Entities;
 
-namespace Backup.Client.BL.Interfaces
+namespace Backup.Client.BL.Facades
 {
-    public interface IBackupFacade
+    public class BackupFacade : IBackupFacade
     {
-        IEnumerable<ScheduledBackup> GetBackups();
+        public IEnumerable<ScheduledBackup> GetBackups()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -128,6 +128,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Backup.Admin.WebApp\Backup.Admin.WebApp.csproj">
+      <Project>{93ed7df3-3b1a-453c-87f1-2b9c1b3a5dff}</Project>
+      <Name>Backup.Admin.WebApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">
+      <Project>{2aeee152-1092-4176-a305-e1ae0fa27e9f}</Project>
+      <Name>Backup.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
