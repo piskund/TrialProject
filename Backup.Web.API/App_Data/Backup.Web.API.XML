@@ -587,11 +587,18 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:Backup.Web.API.Controllers.ClientController.#ctor(Backup.DAL.Interfaces.IScheduledBackupRepository)">
+        <member name="M:Backup.Web.API.Controllers.ClientController.#ctor(Backup.DAL.Interfaces.IClientInfoRepository)">
             <summary>
-            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.BackupController"/> class.
+            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.ClientController"/> class.
             </summary>
             <param name="repository">The repository.</param>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ClientController.Get(System.String)">
+            <summary>
+            Gets the specified ip.
+            </summary>
+            <param name="ip">The ip.</param>
+            <returns></returns>
         </member>
         <member name="M:Backup.Web.API.Controllers.ClientController.GetAllRegisteredClients">
             <summary>
@@ -599,14 +606,11 @@
             </summary>
             <returns>Collection of ips.</returns>
         </member>
-        <member name="M:Backup.Web.API.Controllers.ClientController.IsClientRegistered(System.String)">
+        <member name="M:Backup.Web.API.Controllers.ClientController.RegisterClient(Backup.Common.Entities.ClientInfo)">
             <summary>
-            Determines whether [is client registered] [the specified ip].
+            Registers the client.
             </summary>
-            <param name="ip">The ip.</param>
-            <returns>
-              <c>true</c> if [is client registered] [the specified ip]; otherwise, <c>false</c>.
-            </returns>
+            <param name="clientInfo">The client information.</param>
         </member>
         <member name="M:Backup.Web.API.IoC.DependencyResolverParameterBinding.#ctor(System.Web.Http.Controllers.HttpParameterDescriptor)">
             <summary>
