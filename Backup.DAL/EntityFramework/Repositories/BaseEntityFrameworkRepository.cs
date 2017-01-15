@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
-using Backup.DAL.Repositories.EntityFramework;
 
 namespace Backup.DAL.EntityFramework.Repositories
 {

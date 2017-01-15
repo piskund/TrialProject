@@ -63,7 +63,9 @@
   <ItemGroup>
     <Compile Include="EntityFramework\BackupContext.cs" />
     <Compile Include="Entities\BackupConfigEntity.cs" />
+    <Compile Include="EntityFramework\Repositories\ActivityInfoRepository.cs" />
     <Compile Include="EntityFramework\Repositories\BaseEntityFrameworkRepository.cs" />
+    <Compile Include="EntityFramework\Repositories\ClientInfoRepository.cs" />
     <Compile Include="Interfaces\IActivityInfoRepository.cs" />
     <Compile Include="Interfaces\IClientInfoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />

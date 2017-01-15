@@ -9,7 +9,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Backup.Common.Entities;
 using Backup.DAL.Interfaces;
-using Backup.DAL.Repositories.EntityFramework;
 
 namespace Backup.DAL.EntityFramework.Repositories
 {

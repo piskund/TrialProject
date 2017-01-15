@@ -4,8 +4,8 @@
 
 using System.Data.Entity;
 using Backup.Common.Entities;
+using Backup.DAL.EntityFramework;
 using Backup.DAL.EntityFramework.Repositories;
-using Backup.DAL.Repositories.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ploeh.AutoFixture;
