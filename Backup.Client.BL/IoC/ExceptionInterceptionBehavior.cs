@@ -27,11 +27,11 @@ namespace Backup.Client.BL.IoC
         public IMethodReturn Invoke(IMethodInvocation input, GetNextInterceptionBehaviorDelegate getNext)
         {
             var result = getNext()(input, getNext);
+            var logger = ServiceLocator.Current.GetInstance<ILogger>();
 
             // Log exception if any thrown
             if (result.Exception != null)
             {
-                var logger = ServiceLocator.Current.GetInstance<ILogger>();
                 logger.LogException(result.Exception);
             }
 

@@ -16,8 +16,8 @@ namespace Backup.Client.Console.App
             IUnityContainer container = new UnityContainer();
             container.LoadConfiguration();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            //var res = WebApiRequestsManager.GetScheduledBackupsAsync("127.0.0.1").Result;
-            var bc = ServiceLocator.Current.GetInstance<IBackupController>();
+            var bc = ServiceLocator.Current.GetInstance<IListener>();
+            bc.StartListen();
             System.Console.ReadKey();
         }
     }

@@ -25,11 +25,5 @@ namespace Backup.Client.BL.Interfaces
         /// </summary>
         /// <param name="activityInfo">The activity information.</param>
         void Save(ActivityInfo activityInfo);
-
-        /// <summary>
-        /// Saves the batch.
-        /// </summary>
-        /// <param name="activities">The activities.</param>
-        void SaveBatch(IEnumerable<ActivityInfo> activities);
     }
 }
