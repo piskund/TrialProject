@@ -5,7 +5,7 @@
 using System.Data.Entity;
 using Backup.Common.Entities;
 
-namespace Backup.DAL.Repositories.EntityFramework
+namespace Backup.DAL.EntityFramework
 {
     /// <summary>
     /// EF context to manipulate with backup info and related.
@@ -35,5 +35,13 @@ namespace Backup.DAL.Repositories.EntityFramework
         /// The activity infos.
         /// </value>
         public virtual DbSet<ActivityInfo> ActivityInfos { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client infos.
+        /// </summary>
+        /// <value>
+        /// The client infos.
+        /// </value>
+        public virtual DbSet<ClientInfo> ClientInfos { get; set; }
     }
 }

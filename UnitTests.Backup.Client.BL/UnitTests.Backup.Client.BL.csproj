@@ -82,6 +82,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AutoFixture\AutoPopulatedMoqPropertiesCustomization.cs" />
+    <Compile Include="BackupLogic\BackupControllerTests.cs" />
     <Compile Include="BackupManagerTests.cs" />
     <Compile Include="FunctionalTests\BackupStrategyCopyFilesTests.cs" />
     <Compile Include="AutoFixture\PropertiesPostprocessor.cs" />

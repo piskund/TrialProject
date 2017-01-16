@@ -508,6 +508,12 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
+        <member name="M:Backup.Web.API.Controllers.ActivityController.#ctor(Backup.DAL.Interfaces.IActivityInfoRepository)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.ClientController"/> class.
+            </summary>
+            <param name="repository">The repository.</param>
+        </member>
         <member name="M:Backup.Web.API.Controllers.ActivityController.Get(System.String)">
             <summary>
             Gets the specified ip address.
@@ -516,17 +522,11 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:Backup.Web.API.Controllers.ActivityController.Post(Backup.Common.Entities.ActivityInfo)">
+        <member name="M:Backup.Web.API.Controllers.ActivityController.SaveActivity(Backup.Common.Entities.ActivityInfo)">
             <summary>
             Posts the specified activity.
             </summary>
             <param name="activity">The activity.</param>
-        </member>
-        <member name="M:Backup.Web.API.Controllers.ActivityController.Post(System.Collections.Generic.IEnumerable{Backup.Common.Entities.ActivityInfo})">
-            <summary>
-            Posts the specified activities.
-            </summary>
-            <param name="activities">The activities.</param>
         </member>
         <member name="T:Backup.Web.API.Controllers.BackupController">
             <summary>
@@ -580,6 +580,37 @@
             Deletes the specified backup.
             </summary>
             <param name="id">The identifier.</param>
+        </member>
+        <member name="T:Backup.Web.API.Controllers.ClientController">
+            <summary>
+            Manages clients of backups
+            </summary>
+            <seealso cref="T:System.Web.Http.ApiController" />
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ClientController.#ctor(Backup.DAL.Interfaces.IClientInfoRepository)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.ClientController"/> class.
+            </summary>
+            <param name="repository">The repository.</param>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ClientController.Get(System.String)">
+            <summary>
+            Gets client info by the specified ip.
+            </summary>
+            <param name="ipAddress">The ip address.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ClientController.GetAllRegisteredClients">
+            <summary>
+            Gets all registered clients' ips.
+            </summary>
+            <returns>Collection of ips.</returns>
+        </member>
+        <member name="M:Backup.Web.API.Controllers.ClientController.RegisterClient(Backup.Common.Entities.ClientInfo)">
+            <summary>
+            Registers the client.
+            </summary>
+            <param name="clientInfo">The client information.</param>
         </member>
         <member name="M:Backup.Web.API.IoC.DependencyResolverParameterBinding.#ctor(System.Web.Http.Controllers.HttpParameterDescriptor)">
             <summary>

@@ -21,7 +21,7 @@ namespace IntegrationTests.Backup.Repositories.EntityFramework
             // Arrange
             var fixture = new Fixture().Customize(new AutoMoqCustomization());
             var entity = fixture.Create<ScheduledBackup>();
-            var sut = new ScheduledBackupEntityFrameworkRepository();
+            var sut = new ScheduledBackupRepository();
 
             // Act
             sut.Add(entity);

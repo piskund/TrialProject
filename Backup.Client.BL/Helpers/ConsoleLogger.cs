@@ -1,8 +1,8 @@
-﻿using Backup.Common.Logger;
+﻿using System;
+using Backup.Common.Logger;
 using CodeContracts;
-using static System.Console;
 
-namespace Backup.Client.Console.App
+namespace Backup.Client.BL.Helpers
 {
     /// <summary>
     ///     Very simple implementation of logger. Basically in order to demonstrate a usage of IoC.
@@ -17,10 +17,10 @@ namespace Backup.Client.Console.App
         public void Log(LogEntry entry)
         {
             Requires.NotNull(entry, nameof(entry));
-            WriteLine(entry.Message);
+            Console.WriteLine(entry.Message);
             if (entry.Exception != null)
             {
-                WriteLine($"{entry.Exception.GetType()} has been thrown! Stack: {entry.Exception.StackTrace}");
+                Console.WriteLine($"{entry.Exception.GetType()} has been thrown! Stack: {entry.Exception.StackTrace}");
             }
         }
     }

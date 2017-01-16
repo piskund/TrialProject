@@ -10,9 +10,8 @@ namespace Backup.Common.Entities
     /// <summary>
     /// Holds information about scheduled backup.
     /// </summary>
-    /// <seealso cref="Backup.Common.Interfaces.IScheduledBackup" />
     [Serializable]
-    public class ScheduledBackup : IScheduledBackup, IEntity
+    public class ScheduledBackup : IEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduledBackup"/> class.
@@ -55,13 +54,5 @@ namespace Backup.Common.Entities
         ///     The scheduled date time.
         /// </value>
         public DateTime ScheduledDateTime { get; set; }
-
-        /// <summary>
-        /// Gets the backup configuration (explicit interface implementation).
-        /// </summary>
-        /// <value>
-        /// The backup configuration.
-        /// </value>
-        IBackupConfig IScheduledBackup.BackupConfig => BackupConfig;
     }
 }

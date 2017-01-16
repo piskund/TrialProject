@@ -2,10 +2,11 @@
 //  BackupStrategyCopyFiles.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Security.Principal;
 using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
-using Backup.Common.Interfaces;
+using Backup.Common.Entities;
 using Backup.Common.Logger;
 
 namespace Backup.Client.BL.BackupLogic
@@ -31,12 +32,19 @@ namespace Backup.Client.BL.BackupLogic
         /// Performs the required work.
         /// </summary>
         /// <param name="config">The configuration.</param>
-        public void DoWork(IBackupConfig config)
+        public void DoWork(BackupConfig config)
         {
             _logger.LogInfo(
                 $"Copying files started. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
 
-            CopyFilesImpersonated(config);
+            try
+            {
+                CopyFilesImpersonated(config);
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
+            }
 
             _logger.LogInfo(
                 $"Copying files finished. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
@@ -46,7 +54,7 @@ namespace Backup.Client.BL.BackupLogic
         /// Backups the file.
         /// </summary>
         /// <param name="backupConfig">The backup configuration.</param>
-        private void CopyFilesImpersonated(IBackupConfig backupConfig)
+        private void CopyFilesImpersonated(BackupConfig backupConfig)
         {
             var sourceImpersonationToken = backupConfig.SourceCredential.GetImpersonationToken(isCurrentSystemLogon: true);
             var destinationImpersonationToken = backupConfig.DestinationCredential.GetImpersonationToken(isCurrentSystemLogon: false);

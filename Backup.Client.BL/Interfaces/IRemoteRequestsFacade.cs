@@ -1,35 +1,24 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  IActivityFacade.cs created by DEP on 2017/01/12
+//  IRemoteRequestsFacade.cs created by DEP on 2017/01/16
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Net;
 using Backup.Common.Entities;
 
 namespace Backup.Client.BL.Interfaces
 {
-    /// <summary>
-    /// Isolates clients from concrete implemetation of activity management.
-    /// </summary>
-    public interface IActivityFacade
+    public interface IRemoteRequestsFacade
     {
         /// <summary>
-        /// Gets all activities.
+        /// Gets the backups.
         /// </summary>
-        /// <param name="address">The address.</param>
         /// <returns></returns>
-        IEnumerable<ActivityInfo> GetAllActivities(IPAddress address);
+        IEnumerable<ScheduledBackup> GetBackups();
 
         /// <summary>
         /// Saves the specified activity information.
         /// </summary>
         /// <param name="activityInfo">The activity information.</param>
         void Save(ActivityInfo activityInfo);
-
-        /// <summary>
-        /// Saves the batch.
-        /// </summary>
-        /// <param name="activities">The activities.</param>
-        void SaveBatch(IEnumerable<ActivityInfo> activities);
     }
 }

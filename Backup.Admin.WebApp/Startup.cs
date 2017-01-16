@@ -1,9 +1,7 @@
-﻿using Backup.Admin.WebApp;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
-
+[assembly: OwinStartupAttribute(typeof(Backup.Admin.WebApp.Startup))]
 namespace Backup.Admin.WebApp
 {
     public partial class Startup

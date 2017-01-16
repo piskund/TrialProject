@@ -4,8 +4,8 @@
 
 using System.Data.Entity;
 using Backup.Common.Entities;
+using Backup.DAL.EntityFramework;
 using Backup.DAL.EntityFramework.Repositories;
-using Backup.DAL.Repositories.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Ploeh.AutoFixture;
@@ -27,7 +27,7 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
             var mockContext = new Mock<BackupContext>();
             mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
 
-            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
+            var sut = new ScheduledBackupRepository(mockContext.Object);
             sut.Add(entity);
 
             mockSet.Verify(m => m.Add(entity), Times.Once());
@@ -45,7 +45,7 @@ namespace UnitTests.Backup.DAL.Repositories.EntityFramework
             var mockContext = new Mock<BackupContext>();
             mockContext.Setup(m => m.ScheduledBackups).Returns(mockSet.Object);
 
-            var sut = new ScheduledBackupEntityFrameworkRepository(mockContext.Object);
+            var sut = new ScheduledBackupRepository(mockContext.Object);
             sut.Delete(entity);
 
             mockSet.Verify(m => m.Remove(entity), Times.Once());

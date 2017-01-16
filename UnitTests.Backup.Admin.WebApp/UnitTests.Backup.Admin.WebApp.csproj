@@ -130,8 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backup.Admin.WebApp\Backup.Admin.WebApp.csproj">
-      <Project>{9DFE8A0B-B3E1-4EDC-857B-25BA829E4ED8}</Project>
+      <Project>{93ed7df3-3b1a-453c-87f1-2b9c1b3a5dff}</Project>
       <Name>Backup.Admin.WebApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">
+      <Project>{2aeee152-1092-4176-a305-e1ae0fa27e9f}</Project>
+      <Name>Backup.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
