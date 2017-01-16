@@ -2,10 +2,11 @@
 //  ActivityController.cs created by DEP on 2017/01/14
 // -------------------------------------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using Backup.Common.Entities;
+using Backup.DAL.Interfaces;
+using CodeContracts;
 
 namespace Backup.Web.API.Controllers
 {
@@ -15,6 +16,18 @@ namespace Backup.Web.API.Controllers
     /// <seealso cref="System.Web.Http.ApiController" />
     public class ActivityController : ApiController
     {
+        private readonly IActivityInfoRepository _repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientController"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        public ActivityController(IActivityInfoRepository repository)
+        {
+            Requires.NotNull(repository, nameof(repository));
+            _repository = repository;
+        }
+
         /// <summary>
         /// Gets the specified ip address.
         /// </summary>
@@ -23,7 +36,8 @@ namespace Backup.Web.API.Controllers
         /// <exception cref="System.NotImplementedException"></exception>
         public IEnumerable<ActivityInfo> Get(string ipAddress)
         {
-            throw new NotImplementedException();
+            Requires.NotNullOrEmpty(ipAddress, nameof(ipAddress));
+            return _repository.GetAllByIp(ipAddress);
         }
 
         /// <summary>
@@ -33,14 +47,8 @@ namespace Backup.Web.API.Controllers
         [HttpPost]
         public void SaveActivity([FromBody] ActivityInfo activity)
         {
-        }
-
-        /// <summary>
-        /// Posts the specified activities.
-        /// </summary>
-        /// <param name="activities">The activities.</param>
-        public void Post([FromBody] IEnumerable<ActivityInfo> activities)
-        {
+            Requires.NotNull(activity, nameof(activity));
+            _repository.Add(activity);
         }
     }
 }

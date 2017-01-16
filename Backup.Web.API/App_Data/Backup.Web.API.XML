@@ -508,6 +508,12 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
+        <member name="M:Backup.Web.API.Controllers.ActivityController.#ctor(Backup.DAL.Interfaces.IActivityInfoRepository)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Backup.Web.API.Controllers.ClientController"/> class.
+            </summary>
+            <param name="repository">The repository.</param>
+        </member>
         <member name="M:Backup.Web.API.Controllers.ActivityController.Get(System.String)">
             <summary>
             Gets the specified ip address.
@@ -521,12 +527,6 @@
             Posts the specified activity.
             </summary>
             <param name="activity">The activity.</param>
-        </member>
-        <member name="M:Backup.Web.API.Controllers.ActivityController.Post(System.Collections.Generic.IEnumerable{Backup.Common.Entities.ActivityInfo})">
-            <summary>
-            Posts the specified activities.
-            </summary>
-            <param name="activities">The activities.</param>
         </member>
         <member name="T:Backup.Web.API.Controllers.BackupController">
             <summary>
