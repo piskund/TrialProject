@@ -91,6 +91,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public IEnumerable<ScheduledBackup> GetAll()
         {
+            var bc = BackupContext.ScheduledBackups.Select(b => b.BackupConfig).ToList();
             return BackupContext.ScheduledBackups.AsEnumerable();
         }
 

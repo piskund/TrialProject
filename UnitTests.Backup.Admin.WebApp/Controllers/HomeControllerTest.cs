@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using Backup.Admin.WebApp.Controllers;
+using Backup.DAL.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace UnitTests.Backup.Admin.WebApp.Controllers
 {
@@ -11,39 +13,15 @@ namespace UnitTests.Backup.Admin.WebApp.Controllers
         public void Index()
         {
             // Arrange
-            var controller = new HomeController();
+            var repositoryMock = new Mock<IScheduledBackupRepository>();
+            var controller = new HomeController(repositoryMock.Object);
 
             // Act
             var result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-            var controller = new HomeController();
-
-            // Act
-            var result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-            var controller = new HomeController();
-
-            // Act
-            var result = controller.Contact() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
+            repositoryMock.Verify(r => r.GetAll(), Times.Once);
         }
     }
 }

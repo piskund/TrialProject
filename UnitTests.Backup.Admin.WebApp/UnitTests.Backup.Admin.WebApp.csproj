@@ -137,6 +137,10 @@
       <Project>{2aeee152-1092-4176-a305-e1ae0fa27e9f}</Project>
       <Name>Backup.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Backup.DAL\Backup.DAL.csproj">
+      <Project>{c44012e3-2855-4a35-856c-1ef1779eff58}</Project>
+      <Name>Backup.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

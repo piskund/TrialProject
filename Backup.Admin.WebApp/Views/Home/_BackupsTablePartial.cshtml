@@ -1,0 +1,38 @@
+﻿@model List<Backup.Admin.WebApp.Models.BackupInfoViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(p => p.FirstOrDefault().IpAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.FirstOrDefault().ScheduledDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.FirstOrDefault().SourceFolderPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.FirstOrDefault().DestinationFolderPath)
+        </th>
+    </tr>
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduledDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourceFolderPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DestinationFolderPath)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
