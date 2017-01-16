@@ -79,25 +79,23 @@
     <Compile Include="BackupLogic\ActivityChangedEventArgs.cs" />
     <Compile Include="BackupLogic\BackupController.cs" />
     <Compile Include="BackupLogic\ScheduledBackupJob.cs" />
-    <Compile Include="Facades\ActivityFacade.cs" />
     <Compile Include="BackupLogic\ScheduledJobsManager.cs" />
     <Compile Include="BackupLogic\BackupStrategyCopyFiles.cs" />
-    <Compile Include="Facades\BackupFacade.cs" />
+    <Compile Include="Facades\RemoteRequestsFacade.cs" />
     <Compile Include="Helpers\ClientRegistrationHelper.cs" />
     <Compile Include="Helpers\ConsoleLogger.cs" />
     <Compile Include="Helpers\FilesManagementHelper.cs" />
     <Compile Include="Helpers\ImpersonationHelper.cs" />
-    <Compile Include="Interfaces\IActivityFacade.cs" />
     <Compile Include="Interfaces\IActivityTracker.cs" />
     <Compile Include="Interfaces\IListener.cs" />
-    <Compile Include="Interfaces\IBackupFacade.cs" />
+    <Compile Include="Interfaces\IRemoteRequestsFacade.cs" />
     <Compile Include="Interfaces\IBackupStrategy.cs" />
     <Compile Include="Interfaces\IRequestManager.cs" />
     <Compile Include="Interfaces\IScheduledBackupJob.cs" />
     <Compile Include="Interfaces\IScheduledJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IoC\ExceptionInterceptionBehavior.cs" />
-    <Compile Include="WebApiRequestManager.cs" />
+    <Compile Include="Facades\WebApiRequestManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backup.Common\Backup.Common.csproj">

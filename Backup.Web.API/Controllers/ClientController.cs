@@ -58,7 +58,6 @@ namespace Backup.Web.API.Controllers
         /// </summary>
         /// <param name="clientInfo">The client information.</param>
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IHttpActionResult> RegisterClient([FromBody] ClientInfo clientInfo)
         {
             Requires.NotNull(clientInfo, nameof(clientInfo));

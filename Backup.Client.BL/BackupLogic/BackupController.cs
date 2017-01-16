@@ -20,8 +20,7 @@ namespace Backup.Client.BL.BackupLogic
         // Request the service every minute.
         private const int DefaultTimerInterval = 60000;
 
-        private readonly IActivityFacade _activityFacade;
-        private readonly IBackupFacade _backupFacade;
+        private readonly IRemoteRequestsFacade _remoteRequestsFacade;
         private readonly IBackupStrategy _backupStrategy;
         private readonly ScheduledJobsManager _jobsManager;
 
@@ -32,20 +31,17 @@ namespace Backup.Client.BL.BackupLogic
         /// <summary>
         /// Initializes a new instance of the <see cref="BackupController" /> class.
         /// </summary>
-        /// <param name="backupFacade">The backup facade.</param>
-        /// <param name="activityFacade">The activity facade.</param>
+        /// <param name="remoteRequestsFacade">The remote requests facade.</param>
         /// <param name="backupStrategy">The backup strategy.</param>
         /// <param name="logger">The logger.</param>
         public BackupController(
-            IBackupFacade backupFacade,
-            IActivityFacade activityFacade,
+            IRemoteRequestsFacade remoteRequestsFacade,
             IBackupStrategy backupStrategy,
             ILogger logger)
         {
             _logger = logger;
             _requestTimer = new Timer(DefaultTimerInterval);
-            _backupFacade = backupFacade;
-            _activityFacade = activityFacade;
+            _remoteRequestsFacade = remoteRequestsFacade;
             _backupStrategy = backupStrategy;
             _jobsManager = new ScheduledJobsManager(_logger);
         }
@@ -86,7 +82,7 @@ namespace Backup.Client.BL.BackupLogic
         /// <returns></returns>
         protected virtual async Task HandleTimer()
         {
-            var scheduledBackups = _backupFacade.GetBackups();
+            var scheduledBackups = _remoteRequestsFacade.GetBackups();
             _logger.LogInfo($"Got {scheduledBackups.Count()} scheduled backups.");
             if (!_lastScheduledBackups.SequenceEqual(scheduledBackups))
             {
@@ -114,7 +110,7 @@ namespace Backup.Client.BL.BackupLogic
             Requires.NotNull(e.ScheduledBackup, nameof(e.ScheduledBackup));
             Requires.NotNull(e.ScheduledBackup, nameof(e.ActivityStatus));
             _logger.LogInfo($"Backup Id: {e.ScheduledBackup.Id}, Status: {e.ActivityStatus}");
-            _activityFacade.Save(new ActivityInfo(e.ScheduledBackup, e.ActivityStatus));
+            _remoteRequestsFacade.Save(new ActivityInfo(e.ScheduledBackup, e.ActivityStatus));
         }
 
         #region IDisposable Support

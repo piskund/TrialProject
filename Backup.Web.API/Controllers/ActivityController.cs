@@ -30,7 +30,8 @@ namespace Backup.Web.API.Controllers
         /// Posts the specified activity.
         /// </summary>
         /// <param name="activity">The activity.</param>
-        public void Post([FromBody] ActivityInfo activity)
+        [HttpPost]
+        public void SaveActivity([FromBody] ActivityInfo activity)
         {
         }
 

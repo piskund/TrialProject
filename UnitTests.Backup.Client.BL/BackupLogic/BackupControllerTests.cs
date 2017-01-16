@@ -30,18 +30,15 @@ namespace UnitTests.Backup.Client.BL.BackupLogic
             fixture.Register(() => DateTime.UtcNow);
             var scheduledBackups = fixture.CreateMany<ScheduledBackup>();
             var backupConfigs = scheduledBackups.Select(s => s.BackupConfig);
-            var backupFacadeMock = new Mock<IBackupFacade>();
-            backupFacadeMock.Setup(facade => facade.GetBackups()).Returns(scheduledBackups);
+            var remoteFacadeMock = new Mock<IRemoteRequestsFacade>();
+            remoteFacadeMock.Setup(facade => facade.GetBackups()).Returns(scheduledBackups);
 
-            // setup ActivityFacade mock
-            var activityFacadeMock = new Mock<IActivityFacade>();
 
             // setup backupStrategy mock
             var backupStrategyMock = new Mock<IBackupStrategy>();
             backupStrategyMock.Setup(strategy => strategy.DoWork(It.IsAny<BackupConfig>()));
             fixture.Register(() => backupStrategyMock.Object);
-            fixture.Register(() => backupFacadeMock.Object);
-            fixture.Register(() => activityFacadeMock.Object);
+            fixture.Register(() => remoteFacadeMock.Object);
             fixture.Register<ILogger>(() => new ConsoleLogger());
 
             const int timerInterval = 30;
@@ -53,7 +50,7 @@ namespace UnitTests.Backup.Client.BL.BackupLogic
             Thread.Sleep(timerInterval * (repeatNumber + 1));
 
             // Assert
-            backupFacadeMock.Verify(b => b.GetBackups(), Times.AtLeast(repeatNumber));
+            remoteFacadeMock.Verify(b => b.GetBackups(), Times.AtLeast(repeatNumber));
             backupStrategyMock.Verify(s => s.DoWork(It.IsIn(backupConfigs)), Times.Exactly(scheduledBackups.Count()));
         }
     }
