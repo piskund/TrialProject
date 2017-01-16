@@ -155,9 +155,9 @@ namespace Backup.DAL.EntityFramework.Repositories
             var backupConfig = new BackupConfig
             {
                 ClientIpAddress = destinationClientInfo.ClientIpAddress,
-                DestinationCredential = new CredentialInfo { UserName = destinationClientInfo.UserName, Password = destinationClientInfo.Password },
+                DestinationCredential = destinationClientInfo.CredentialInfo,
                 DestinationFolderPath = destinationClientInfo.SharedFolderPath,
-                SourceCredential = new CredentialInfo { UserName = sourceClientInfo.UserName, Password = sourceClientInfo.Password },
+                SourceCredential = sourceClientInfo.CredentialInfo,
                 SourceFolderPath = sourceClientInfo.SharedFolderPath
             };
 

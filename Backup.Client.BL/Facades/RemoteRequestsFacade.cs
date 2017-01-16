@@ -77,7 +77,7 @@ namespace Backup.Client.BL.Facades
         private void SetAccessToken(ClientInfo clientInfo)
         {
             LogonOrRegisterAsync(clientInfo).Wait();
-            _requestManager.SetAccessToken(clientInfo.UserName, clientInfo.Password);
+            _requestManager.SetAccessToken(clientInfo.CredentialInfo.UserName, clientInfo.CredentialInfo.Password);
         }
     }
 }

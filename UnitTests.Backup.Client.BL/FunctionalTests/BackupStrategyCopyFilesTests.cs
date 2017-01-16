@@ -20,7 +20,6 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
     // Please make sure you have shared  shareFolder for ShareUser with password 1q2w3e before enable this test.
     public class BackupStrategyCopyFilesTests
     {
-        private const int TestFilesNumber = 2;
         private static readonly string DestinationPath = Path.Combine(Path.GetTempPath(), "TestSharedFolder");
 
         [TestMethod]
@@ -32,9 +31,9 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
             var backupConfig = new BackupConfig
             {
                 SourceFolderPath = crh.ClientInfo.SharedFolderPath,
-                SourceCredential = new CredentialInfo { UserName = crh.ClientInfo.UserName, Password = crh.ClientInfo.Password },
+                SourceCredential = crh.ClientInfo.CredentialInfo,
                 DestinationFolderPath = DestinationPath,
-                DestinationCredential = new CredentialInfo { UserName = crh.ClientInfo.UserName, Password = crh.ClientInfo.Password }
+                DestinationCredential = crh.ClientInfo.CredentialInfo
             };
             var backupStrategy = new BackupStrategyCopyFiles(logger);
 
@@ -44,10 +43,8 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
             // Assert
             var filesInSource = Directory.EnumerateFiles(backupConfig.SourceFolderPath);
             Assert.IsNotNull(filesInSource);
-            Assert.AreEqual(TestFilesNumber, filesInSource.Count());
             var filesInDestination = Directory.EnumerateFiles(backupConfig.DestinationFolderPath);
             Assert.IsNotNull(filesInDestination);
-            Assert.AreEqual(TestFilesNumber, filesInDestination.Count());
             foreach (var fileName in filesInSource.Select(Path.GetFileName))
                 Assert.IsTrue(filesInDestination.Any(f => f.Contains(fileName)));
         }

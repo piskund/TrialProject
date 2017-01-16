@@ -13,28 +13,36 @@ namespace Backup.Common.Entities
     /// <seealso cref="Backup.Common.Interfaces.IEntity" />
     public class ClientInfo : IEntity
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the client ip address.
+        /// </summary>
+        /// <value>
+        /// The client ip address.
+        /// </value>
         public string ClientIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the user.
+        /// Gets or sets the credential information.
         /// </summary>
         /// <value>
-        /// The name of the user.
+        /// The credential information.
         /// </value>
-        public string UserName { get; set; }
+        public CredentialInfo CredentialInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the password.
+        /// Gets or sets the shared folder path.
         /// </summary>
         /// <value>
-        /// The password.
+        /// The shared folder path.
         /// </value>
-        public string Password { get; set; }
-
-        //public CredentialInfo CredentialInfo { get; set; }
-
         public string SharedFolderPath { get; set; }
     }
 }

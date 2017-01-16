@@ -63,7 +63,7 @@ namespace Backup.Web.API.Controllers
         {
             Requires.NotNull(clientInfo, nameof(clientInfo));
 
-            var userName = clientInfo.UserName;
+            var userName = clientInfo.CredentialInfo.UserName;
 
             IdentityResult result;
             var user = new ApplicationUser
@@ -74,7 +74,7 @@ namespace Backup.Web.API.Controllers
 
             using (var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>())
             {
-                result = await userManager.CreateAsync(user, clientInfo.Password);
+                result = await userManager.CreateAsync(user, clientInfo.CredentialInfo.Password);
             }
 
             if (!result.Succeeded)
