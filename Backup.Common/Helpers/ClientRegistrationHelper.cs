@@ -22,7 +22,8 @@ namespace Backup.Common.Helpers
             var localPath = @"\\" + ipAddress;
             ClientInfo = new ClientInfo
             {
-                CredentialInfo = new CredentialInfo {UserName = userName, Password = password},
+                UserName = userName,
+                Password = password,
                 ClientIpAddress = ipAddress,
                 SharedFolderPath = Path.Combine(localPath, folderPath)
             };

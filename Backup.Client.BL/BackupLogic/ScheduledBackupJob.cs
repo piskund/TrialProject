@@ -23,7 +23,7 @@ namespace Backup.Client.BL.BackupLogic
         /// <summary>
         /// Occurs when [activity status changed].
         /// </summary>
-        public event EventHandler<ActivityChangedEventArgs> ActivityStatusChanged;
+        public static event EventHandler<ActivityChangedEventArgs> ActivityStatusChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScheduledBackupJob" /> class.

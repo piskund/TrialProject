@@ -11,6 +11,7 @@ using Backup.Common.Helpers;
 using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Backup.Common.DTO;
 
 namespace UnitTests.Backup.Client.BL.FunctionalTests
 {
@@ -31,9 +32,9 @@ namespace UnitTests.Backup.Client.BL.FunctionalTests
             var backupConfig = new BackupConfig
             {
                 SourceFolderPath = crh.ClientInfo.SharedFolderPath,
-                SourceCredential = crh.ClientInfo.CredentialInfo,
+                SourceCredential = new CredentialInfo { UserName = crh.ClientInfo.UserName, Password = crh.ClientInfo.Password },
                 DestinationFolderPath = DestinationPath,
-                DestinationCredential = crh.ClientInfo.CredentialInfo
+                DestinationCredential = new CredentialInfo { UserName = crh.ClientInfo.UserName, Password = crh.ClientInfo.Password }
             };
             var backupStrategy = new BackupStrategyCopyFiles(logger);
 

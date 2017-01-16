@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using Backup.Common.DTO;
 using Backup.Common.Entities;
 using Backup.Common.Helpers;
 using Backup.DAL.Interfaces;
@@ -111,7 +112,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public ClientInfo GetSingle(Expression<Func<ClientInfo, bool>> whereCondition)
         {
-            return BackupContext.ClientInfos.Where(whereCondition).Single();
+            return BackupContext.ClientInfos.Where(whereCondition).SingleOrDefault();
         }
 
         /// <summary>
@@ -154,9 +155,9 @@ namespace Backup.DAL.EntityFramework.Repositories
             var backupConfig = new BackupConfig
             {
                 ClientIpAddress = destinationClientInfo.ClientIpAddress,
-                DestinationCredential = destinationClientInfo.CredentialInfo,
+                DestinationCredential = new CredentialInfo { UserName = destinationClientInfo.UserName, Password = destinationClientInfo.Password },
                 DestinationFolderPath = destinationClientInfo.SharedFolderPath,
-                SourceCredential = sourceClientInfo.CredentialInfo,
+                SourceCredential = new CredentialInfo { UserName = sourceClientInfo.UserName, Password = sourceClientInfo.Password },
                 SourceFolderPath = sourceClientInfo.SharedFolderPath
             };
 

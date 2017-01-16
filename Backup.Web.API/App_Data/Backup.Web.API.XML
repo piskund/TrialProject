@@ -595,9 +595,9 @@
         </member>
         <member name="M:Backup.Web.API.Controllers.ClientController.Get(System.String)">
             <summary>
-            Gets the specified ip.
+            Gets client info by the specified ip.
             </summary>
-            <param name="ip">The ip.</param>
+            <param name="ipAddress">The ip address.</param>
             <returns></returns>
         </member>
         <member name="M:Backup.Web.API.Controllers.ClientController.GetAllRegisteredClients">

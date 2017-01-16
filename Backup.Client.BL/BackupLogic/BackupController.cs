@@ -3,7 +3,6 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -11,14 +10,13 @@ using Backup.Client.BL.Interfaces;
 using Backup.Common.Entities;
 using Backup.Common.Logger;
 using CodeContracts;
-using Microsoft.Practices.ObjectBuilder2;
 
 namespace Backup.Client.BL.BackupLogic
 {
     public class BackupController : IListener, IDisposable
     {
         // Request the service every minute.
-        private const int DefaultTimerInterval = 60000;
+        private const int DefaultTimerInterval = 10000;
 
         private readonly IRemoteRequestsFacade _remoteRequestsFacade;
         private readonly IBackupStrategy _backupStrategy;
@@ -26,7 +24,6 @@ namespace Backup.Client.BL.BackupLogic
 
         private readonly ILogger _logger;
         private readonly Timer _requestTimer;
-        private IEnumerable<ScheduledBackup> _lastScheduledBackups = Enumerable.Empty<ScheduledBackup>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BackupController" /> class.
@@ -51,10 +48,7 @@ namespace Backup.Client.BL.BackupLogic
         /// </summary>
         public void StartListen()
         {
-            if (!_requestTimer.Enabled)
-            {
-                StartListen(DefaultTimerInterval);
-            }
+            StartListen(DefaultTimerInterval);
         }
 
         /// <summary>
@@ -66,7 +60,7 @@ namespace Backup.Client.BL.BackupLogic
             if (!_requestTimer.Enabled)
             {
                 _requestTimer.Interval = timerInterval;
-                _logger.LogInfo($"Start listening web service with interval {_requestTimer.Interval / 1000} sec.");
+                _logger.LogInfo($"Start listening web service with interval {_requestTimer.Interval/1000} sec.");
                 _requestTimer.Elapsed += async (sender, e) => await HandleTimer();
                 _requestTimer.Start();
             }
@@ -82,21 +76,25 @@ namespace Backup.Client.BL.BackupLogic
         /// <returns></returns>
         protected virtual async Task HandleTimer()
         {
-            var scheduledBackups = _remoteRequestsFacade.GetBackups();
-            _logger.LogInfo($"Got {scheduledBackups.Count()} scheduled backups.");
-            if (!_lastScheduledBackups.SequenceEqual(scheduledBackups))
+            try
             {
-                _logger.LogInfo("Backups differ from previous ones, starting to reinitialize.");
-                _lastScheduledBackups = new List<ScheduledBackup>(scheduledBackups);
-                var scheduledJobs =
-                    scheduledBackups.Select(scheduledBackup => new ScheduledBackupJob(scheduledBackup, _backupStrategy));
-                scheduledJobs.ForEach(j => j.ActivityStatusChanged += OnJobActivityStatusChanged);
-                await _jobsManager.ProceedScheduledJobsAsync(scheduledJobs);
+                if (!_jobsManager.IsWorking)
+                {
+                    var scheduledBackups = _remoteRequestsFacade.GetBackups();
+                    _logger.LogInfo($"Got {scheduledBackups.Count()} scheduled backups.");
+
+                    if (scheduledBackups.All(s => s.BackupConfig != null))
+                    {
+                        var scheduledJobs =
+                            scheduledBackups.Select(scheduledBackup => new ScheduledBackupJob(scheduledBackup, _backupStrategy));
+                        _logger.LogInfo("Subscribing");
+                        ScheduledBackupJob.ActivityStatusChanged += OnJobActivityStatusChanged;
+
+                        await _jobsManager.ProceedScheduledJobsAsync(scheduledJobs);
+                    }
+                }
             }
-            else
-            {
-                _logger.LogInfo("Recieved backups list matches to the previous one.");
-            }
+            catch {}
         }
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace Backup.Client.BL.BackupLogic
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="ActivityChangedEventArgs"/> instance containing the event data.</param>
-        private void OnJobActivityStatusChanged(object sender, ActivityChangedEventArgs e)
+        public void OnJobActivityStatusChanged(object sender, ActivityChangedEventArgs e)
         {
             Requires.NotNull(e, nameof(e));
             Requires.NotNull(e.ScheduledBackup, nameof(e.ScheduledBackup));

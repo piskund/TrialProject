@@ -2,6 +2,7 @@
 //  BackupStrategyCopyFiles.cs created by DEP on 2017/01/12
 // -------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Security.Principal;
 using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
@@ -36,7 +37,14 @@ namespace Backup.Client.BL.BackupLogic
             _logger.LogInfo(
                 $"Copying files started. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");
 
-            CopyFilesImpersonated(config);
+            try
+            {
+                CopyFilesImpersonated(config);
+            }
+            catch (Exception e)
+            {
+                _logger.LogException(e);
+            }
 
             _logger.LogInfo(
                 $"Copying files finished. \n Source: {config.SourceFolderPath} \n Destination: {config.DestinationFolderPath} \n");

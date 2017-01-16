@@ -3,6 +3,7 @@
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Backup.Common.Entities;
 using Backup.DAL.Interfaces;
@@ -49,7 +50,9 @@ namespace Backup.Web.API.Controllers
         public IEnumerable<ScheduledBackup> Get(string ipAddress)
         {
             Requires.NotNullOrEmpty(ipAddress, nameof(ipAddress));
-            return _repository.GetAllByIp(ipAddress);
+            var result = _repository.GetAllByIp(ipAddress).ToList();
+            var bcs = result.Select(s => s.BackupConfig).ToList();
+            return result;
         }
 
         /// <summary>

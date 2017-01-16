@@ -112,7 +112,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public ScheduledBackup GetSingle(Expression<Func<ScheduledBackup, bool>> whereCondition)
         {
-            return BackupContext.ScheduledBackups.Where(whereCondition).Single();
+            return BackupContext.ScheduledBackups.Where(whereCondition).SingleOrDefault();
         }
 
         /// <summary>

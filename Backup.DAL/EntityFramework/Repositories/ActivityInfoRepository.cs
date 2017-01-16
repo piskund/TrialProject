@@ -111,7 +111,7 @@ namespace Backup.DAL.EntityFramework.Repositories
         /// <returns></returns>
         public ActivityInfo GetSingle(Expression<Func<ActivityInfo, bool>> whereCondition)
         {
-            return BackupContext.ActivityInfos.Where(whereCondition).Single();
+            return BackupContext.ActivityInfos.Where(whereCondition).SingleOrDefault();
         }
 
         /// <summary>

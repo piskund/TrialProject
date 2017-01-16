@@ -12,6 +12,7 @@ using Backup.DAL.Models;
 using CodeContracts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Backup.Common.DTO;
 
 namespace Backup.Web.API.Controllers
 {
@@ -34,14 +35,14 @@ namespace Backup.Web.API.Controllers
         }
 
         /// <summary>
-        /// Gets the specified ip.
+        /// Gets client info by the specified ip.
         /// </summary>
-        /// <param name="ip">The ip.</param>
+        /// <param name="ipAddress">The ip address.</param>
         /// <returns></returns>
-        public ClientInfo Get(string ip)
+        public ClientInfo Get(string ipAddress)
         {
-            Requires.NotNullOrEmpty(ip, nameof(ip));
-            return _repository.GetSingle(c => c.ClientIpAddress == ip);
+            Requires.NotNullOrEmpty(ipAddress, nameof(ipAddress));
+            return _repository.GetSingle(c => c.ClientIpAddress == ipAddress);
         }
 
         /// <summary>
@@ -62,16 +63,18 @@ namespace Backup.Web.API.Controllers
         {
             Requires.NotNull(clientInfo, nameof(clientInfo));
 
+            var userName = clientInfo.UserName;
+
             IdentityResult result;
             var user = new ApplicationUser
             {
-                UserName = clientInfo.CredentialInfo.UserName,
-                Email = clientInfo.CredentialInfo.UserName
+                UserName = userName,
+                Email = userName + "@fake.com"
             };
 
             using (var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>())
             {
-                result = await userManager.CreateAsync(user, clientInfo.CredentialInfo.Password);
+                result = await userManager.CreateAsync(user, clientInfo.Password);
             }
 
             if (!result.Succeeded)

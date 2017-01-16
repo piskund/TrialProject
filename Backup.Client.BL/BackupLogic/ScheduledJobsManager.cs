@@ -34,10 +34,22 @@ namespace Backup.Client.BL.BackupLogic
         /// </summary>
         private readonly ILogger _logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScheduledJobsManager"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
         public ScheduledJobsManager(ILogger logger)
         {
             _logger = logger;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is working.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is working; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsWorking => (_queue.Count > 0) && !_queue.IsCompleted;
 
         /// <summary>
         /// Proceeds the scheduled jobs asynchronous.
@@ -45,7 +57,7 @@ namespace Backup.Client.BL.BackupLogic
         /// <param name="scheduledJobs">The scheduled jobs.</param>
         internal async Task ProceedScheduledJobsAsync(IEnumerable<IScheduledJob> scheduledJobs)
         {
-            if (_queue.Count > 0 && !_queue.IsCompleted)
+            if (IsWorking)
             {
                 _logger.LogInfo("The queue is stale and starting to reinitialize with new list of jobs.");
                 // Cancel current queue proceeding.
