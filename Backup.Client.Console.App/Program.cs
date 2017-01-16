@@ -2,6 +2,7 @@
 //  Program.cs created by DEP on 2017/01/15
 // -------------------------------------------------------------------------------------------------------------
 
+using Backup.Common.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;

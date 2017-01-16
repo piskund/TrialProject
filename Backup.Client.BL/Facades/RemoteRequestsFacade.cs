@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Backup.Client.BL.Helpers;
 using Backup.Client.BL.Interfaces;
 using Backup.Common.Entities;
+using Backup.Common.Helpers;
 using CodeContracts;
 
 namespace Backup.Client.BL.Facades

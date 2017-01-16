@@ -5,9 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using Backup.Common.Entities;
+using Backup.Common.Helpers;
 using Backup.DAL.Interfaces;
 
 namespace Backup.DAL.EntityFramework.Repositories
@@ -36,6 +38,8 @@ namespace Backup.DAL.EntityFramework.Repositories
         public void Add(ClientInfo entity)
         {
             BackupContext.ClientInfos.Add(entity);
+            var scheduledBackups = GetScheduledBackupsForNewlyRegisteredClient(entity);
+            BackupContext.ScheduledBackups.AddRange(scheduledBackups);
             BackupContext.SaveChanges();
         }
 
@@ -128,6 +132,43 @@ namespace Backup.DAL.EntityFramework.Repositories
         public IEnumerable<ClientInfo> GetAllByIp(string ipAddress)
         {
             return GetAll(clientInfo => clientInfo.ClientIpAddress == ipAddress);
+        }
+
+        /// <summary>
+        /// Gets the scheduled backups for newly registered client.
+        /// </summary>
+        /// <param name="sourceClientInfo">The source client information.</param>
+        /// <returns>List of scheduled backups.</returns>
+        private IEnumerable<ScheduledBackup> GetScheduledBackupsForNewlyRegisteredClient(ClientInfo sourceClientInfo)
+        {
+            var scheduledBackups = new List<ScheduledBackup>();
+
+            var destinationFolder = sourceClientInfo.ClientIpAddress;
+            var destinationPath = Path.Combine("serverSharedFolder", destinationFolder);
+            var destinationRegistrationHelper = new ClientRegistrationHelper(
+                "ServerUser",
+                "1q2w3e",
+                destinationPath);
+            var destinationClientInfo = destinationRegistrationHelper.ClientInfo;
+
+            var backupConfig = new BackupConfig
+            {
+                ClientIpAddress = destinationClientInfo.ClientIpAddress,
+                DestinationCredential = destinationClientInfo.CredentialInfo,
+                DestinationFolderPath = destinationClientInfo.SharedFolderPath,
+                SourceCredential = sourceClientInfo.CredentialInfo,
+                SourceFolderPath = sourceClientInfo.SharedFolderPath
+            };
+
+            var lastScheduled = DateTime.UtcNow;
+            for (int i = 0; i < 10; i++)
+            {
+                var scheduledBackup = new ScheduledBackup(lastScheduled, backupConfig);
+                scheduledBackups.Add(scheduledBackup);
+                lastScheduled = lastScheduled.AddHours(1);
+            }
+
+            return scheduledBackups;
         }
     }
 }

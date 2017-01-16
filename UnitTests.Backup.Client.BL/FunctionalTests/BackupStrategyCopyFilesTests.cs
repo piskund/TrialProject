@@ -7,6 +7,7 @@ using System.Linq;
 using Backup.Client.BL.BackupLogic;
 using Backup.Client.BL.Helpers;
 using Backup.Common.Entities;
+using Backup.Common.Helpers;
 using Backup.Common.Logger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

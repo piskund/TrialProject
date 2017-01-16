@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------------------------
-//  ClientController.cs created by DEP on 2017/01/15
+//  ClientController.cs created by DEP on 2017/01/16
 // -------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
@@ -63,7 +63,11 @@ namespace Backup.Web.API.Controllers
             Requires.NotNull(clientInfo, nameof(clientInfo));
 
             IdentityResult result;
-            var user = new ApplicationUser { UserName = clientInfo.CredentialInfo.UserName, Email = clientInfo.CredentialInfo.UserName };
+            var user = new ApplicationUser
+            {
+                UserName = clientInfo.CredentialInfo.UserName,
+                Email = clientInfo.CredentialInfo.UserName
+            };
 
             using (var userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>())
             {

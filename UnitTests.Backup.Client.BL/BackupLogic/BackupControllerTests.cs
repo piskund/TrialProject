@@ -33,7 +33,6 @@ namespace UnitTests.Backup.Client.BL.BackupLogic
             var remoteFacadeMock = new Mock<IRemoteRequestsFacade>();
             remoteFacadeMock.Setup(facade => facade.GetBackups()).Returns(scheduledBackups);
 
-
             // setup backupStrategy mock
             var backupStrategyMock = new Mock<IBackupStrategy>();
             backupStrategyMock.Setup(strategy => strategy.DoWork(It.IsAny<BackupConfig>()));

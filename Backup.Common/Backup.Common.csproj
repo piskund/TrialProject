@@ -48,6 +48,7 @@
     <Compile Include="DTO\ActivivtyStatus.cs" />
     <Compile Include="Entities\ClientInfo.cs" />
     <Compile Include="Entities\ScheduledBackup.cs" />
+    <Compile Include="Helpers\ClientRegistrationHelper.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Logger\FakeLogger.cs" />
     <Compile Include="Logger\ILogger.cs" />
